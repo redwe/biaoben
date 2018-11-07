@@ -27,22 +27,26 @@ class XmglController extends AdminBaseController
     {
         $where['b.isdel']   = 0;
         $request = input('request.');
+
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
+
+        $where2 = ['adddo'=>"pro"];
+        $pros = Db::name("options")->where($where2)->order("id ASC")->select();
+        $this->assign('pros', $pros);
+
         if (!empty($request['uname'])) {
             $where['b.uname'] = $request['uname'];
         }
         if (!empty($request['xid'])) {
             $where['b.xid'] = $request['xid'];
         }
-        if(isset($request['status']) && $request['status']!="all"){
-            if(empty($request['status'])){
-                $status = 0;
-            }
-            else
-            {
-                $status = 1;
-            }
-            $where['b.status'] = $status;     //intval($request['status']);
+
+        if (!empty($request['com'])) {
+            $where['b.com'] = $request['com'];
         }
+
         $join=[
             ["project p","b.xid = p.xid"]
         ];

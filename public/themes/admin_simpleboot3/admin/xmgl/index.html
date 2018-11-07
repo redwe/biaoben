@@ -26,20 +26,25 @@
 
 <body>
   <div class="xxmt_right_nr_x">
-        <form>
+      <form name="search" action="#" method="post">
           <div class="xxmt_add-search">
             <div class="xxmt_add">
-            
+                <php>
+                    $plist = $coms['price'];
+                    if($plist){
+                    $parray = explode(",",$plist);
+                    }
+                </php>
             </div>
             <div class="xxmt_search">
-              <input type="text" placeholder="姓名"/>
-              <input type="text" placeholder="标本号"/>
-              <select>
-                <option value ="送检单位">送检单位</option>
-                <option value ="单位a">单位a</option>
-                <option value ="单位b">单位b</option>
-                <option value ="单位c">单位c</option>
-              </select>
+                <input type="text" name="uname"  placeholder="姓名"/>
+                <input type="text" name="xid"  placeholder="标本号"/>
+                <select name="com">
+                    <option value ="">{$coms.pname}</option>
+                    <foreach name="parray" item="vo">
+                        <option value ="{$vo}">{$vo}</option>
+                    </foreach>
+                </select>
               <button type="submit">搜索</button> 
             </div>
             <div class="qing"></div>
@@ -58,110 +63,21 @@
                 <td>送检单位</td>
                 <td>选择实验室</td>
               </tr>
+                <foreach name="list" item="vo">
               <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
+                <td><input type="checkbox" name="checkid[]" value="{$vo.id}"/></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.uname}</td>
+                <td>{$vo.xid}</td>
                 <td><select>
                     <option value ="EAR">EAR</option>
                     <option value ="her2">her2</option>
                     <option value ="PD-L1">PD-L1</option></td>
-                <td>2018-10-11</td>
-                <td>单位a</td>
-                <td>实验室a</td>
+                <td>{$vo.create}</td>
+                <td>{$vo.com}</td>
+                <td>{$vo.labs}</td>
               </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td><select>
-                    <option value ="EAR">EAR</option>
-                    <option value ="her2">her2</option>
-                    <option value ="PD-L1">PD-L1</option></td>
-                <td>2018-10-11</td>
-                <td>单位a</td>
-                <td>实验室a</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td><select>
-                    <option value ="EAR">EAR</option>
-                    <option value ="her2">her2</option>
-                    <option value ="PD-L1">PD-L1</option></td>
-                <td>2018-10-11</td>
-                <td>单位a</td>
-                <td>实验室a</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td><select>
-                    <option value ="EAR">EAR</option>
-                    <option value ="her2">her2</option>
-                    <option value ="PD-L1">PD-L1</option></td>
-                <td>2018-10-11</td>
-                <td>单位a</td>
-                <td>实验室a</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td><select>
-                    <option value ="EAR">EAR</option>
-                    <option value ="her2">her2</option>
-                    <option value ="PD-L1">PD-L1</option></td>
-                <td>2018-10-11</td>
-                <td>单位a</td>
-                <td>实验室a</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td><select>
-                    <option value ="EAR">EAR</option>
-                    <option value ="her2">her2</option>
-                    <option value ="PD-L1">PD-L1</option></td>
-                <td>2018-10-11</td>
-                <td>单位a</td>
-                <td>实验室a</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td><select>
-                    <option value ="EAR">EAR</option>
-                    <option value ="her2">her2</option>
-                    <option value ="PD-L1">PD-L1</option></td>
-                <td>2018-10-11</td>
-                <td>单位a</td>
-                <td>实验室a</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td><select>
-                    <option value ="EAR">EAR</option>
-                    <option value ="her2">her2</option>
-                    <option value ="PD-L1">PD-L1</option></td>
-                <td>2018-10-11</td>
-                <td>单位a</td>
-                <td>实验室a</td>
-              </tr>
+                </foreach>
             </table>
             <div class="xxmt_tab_inputs">
               <input type="button" value="保存"/>
@@ -169,7 +85,7 @@
             </div>
           </div>
         </form>
-        <div class="fenye"> <a href="#"> << </a> <a href="#"> < </a> <b>1</b> <a href="#"> 2 </a> <a href="#"> 3 </a> <a href="#"> > </a> <a href="#"> >> </a> </div>
+        <div class="fenye"> {$page} </div>
       </div>
 </body>
 </html>
