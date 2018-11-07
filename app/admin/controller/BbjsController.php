@@ -62,7 +62,9 @@ class BbjsController extends AdminBaseController
     {
         if ($this->request->isPost()) {
             $_POST['create'] = date("Y-m-d H:i:s",time());
+            $_POST['mid'] = serialize($_POST['mid']);
             $_POST['pid'] = serialize($_POST['pid']);
+            $_POST['pname'] = serialize($_POST['pname']);
             $_POST['project'] = serialize($_POST['project']);           //serialize序列化，反序列化unserialize
             $_POST['isdel'] = 0;
             $_POST['status'] = '';
@@ -71,8 +73,51 @@ class BbjsController extends AdminBaseController
             if ($result !== true) {
                 $this->error($result);
             } else {
-                $result    = DB::name('Bbjs')->insertGetId($_POST);
-                $this->success("添加成功！", url("bbjs/index"));
+                $canshu = ["xid"=>$_POST['xid']];
+                $isAt = DB::name('Bbjs')->field("xid")->where($canshu)->select();
+                if(!empty($isAt["xid"])){
+                    //dump($isAt);
+                    $this->error("该记录已经存在，不能重复添加！", url("bbjs/index"));
+                }
+                else
+                {
+                    $data0 = [
+                        "xid"=>$_POST['xid'],
+                        "uname"=>$_POST['uname'],
+                        "sex"=>$_POST['sex'],
+                        "age"=>$_POST['age'],
+                        "mobile"=>$_POST['mobile'],
+                        "com"=>$_POST['com'],
+                        "linc"=>$_POST['linc'],
+                        "mark"=>$_POST['mark'],
+                        "code"=>$_POST['code'],
+                        "block"=>$_POST['block'],
+                        "btype"=>$_POST['btype'],
+                        "isdel"=>0,
+                        "status"=>0,
+                        "create"=>date("Y-m-d h:i:s")
+                    ];
+                    $bid    = DB::name('Bbjs')->insertGetId($data0);
+                    if($bid){
+                        $data = [
+                            "bid"=>$bid,
+                            "mid"=>$_POST['mid']
+                        ];
+                        DB::name('baogao')->insertGetId($data);
+
+                        $data2 = [
+                            "bid"=>$bid,
+                            "xid"=>$_POST['xid'],
+                            "mid"=>$_POST['mid'],
+                            "pid"=>$_POST['pid'],
+                            "pname"=>$_POST['pname'],
+                            "project"=>$_POST['project']
+                        ];
+                        DB::name('project')->insertGetId($data2);
+
+                        $this->success("添加成功！", url("bbjs/index"));
+                    }
+                }
             }
         }
     }
@@ -83,10 +128,10 @@ class BbjsController extends AdminBaseController
         $where['isdel']   = 0;
         $request = input('request.');
         if (!empty($request['uname'])) {
-            $where['uname'] = $request['uname'];
+            $where['b.uname'] = $request['uname'];
         }
         if (!empty($request['xid'])) {
-            $where['xid'] = $request['xid'];
+            $where['b.xid'] = $request['xid'];
         }
         if(isset($request['status']) && $request['status']!="all"){
             if(empty($request['status'])){
@@ -96,22 +141,45 @@ class BbjsController extends AdminBaseController
             {
                 $status = 1;
             }
-            $where['status'] = $status;     //intval($request['status']);
+            $where['b.status'] = $status;     //intval($request['status']);
         }
         $usersQuery = Db::name('bbjs');
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project";
         if (!empty($request['date'])) {
             $dt = $request['date'];
             if($dt == '0'){
-                $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->order("b.id DESC")
+                    ->paginate(10);
             }
             else
             {
-                $list = $usersQuery->where($where)->whereTime('create','>','-'.$dt.' days')->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->whereTime('create','>','-'.$dt.' days')
+                    ->order("b.id DESC")
+                    ->paginate(10);
             }
         }
         else
         {
-            $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("b.id DESC")
+                ->paginate(10);
         }
         // 获取分页显示
         $page = $list->render();
@@ -123,8 +191,29 @@ class BbjsController extends AdminBaseController
 //修改页面
     public function edit()
     {
+        $where = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where)->order("id DESC")->find();
+        $where = ['adddo'=>"type"];
+        $ptype = Db::name("options")->where($where)->order("id DESC")->find();
+        $where = ['adddo'=>"pro"];
+        $pros = Db::name("options")->where($where)->order("id ASC")->select();
+
+        $this->assign('coms', $coms);
+        $this->assign('ptype', $ptype);
+        $this->assign('pros', $pros);
+
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project,p.mid,p.pid";
+
         $id    = $this->request->param('id', 0, 'intval');
-        $member = DB::name('bbjs')->where(["id" => $id])->find();
+        $member = DB::name('bbjs')
+            ->alias('b')
+            ->field($field)
+            ->join($join)
+            ->where(["b.id" => $id])
+            ->find();
         $this->assign($member);
         return $this->fetch();
     }
@@ -263,14 +352,24 @@ class BbjsController extends AdminBaseController
 	//标本接收到运营中心
 	public function bbjs()
     {
-        $where['isdel']   = 0;
-        $where['status']  = 0;
+        $where['b.isdel']   = 0;
+        $where['b.status']  = 0;
         $request = input('request.');
         if (!empty($request['com'])) {
-            $where['com'] = $request['com'];
+            $where['b.com'] = $request['com'];
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project";
         $usersQuery = Db::name('bbjs');
-        $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+        $list = $usersQuery
+            ->alias('b')
+            ->field($field)
+            ->join($join)
+            ->where($where)
+            ->order("b.id DESC")
+            ->paginate(10);
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
@@ -281,20 +380,37 @@ class BbjsController extends AdminBaseController
     //标本分发到各实验室
     public function bbff()
     {
-        $where['isdel']   = 0;
-        $where['position']   = '运营中心';
+        $where['b.isdel']   = 0;
+        $where['b.position']   = '运营中心';
         $request = input('request.');
         if (!empty($request['com'])) {
-            $where['com'] = $request['com'];
+            $where['b.com'] = $request['com'];
         }
         $usersQuery = Db::name('bbjs');
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project";
         if (!empty($request['project'])) {
             $project = $request['project'];
-            $list = $usersQuery->where($where)->where('project','like','%'.$project.'%')->order("id DESC")->paginate(10);
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->where('p.project','like','%'.$project.'%')
+                ->order("b.id DESC")
+                ->paginate(10);
         }
         else
         {
-            $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("b.id DESC")
+                ->paginate(10);
         }
 
         $where2 = ['adddo'=>"shiyan"];
@@ -356,30 +472,52 @@ class BbjsController extends AdminBaseController
     //标本回收,返回运营中心
     public function bbhs()
     {
-        $where['isdel']   = 0;
-        $where['position']   = array('not in','客户处,运营中心');
+        $where['b.isdel']   = 0;
+        $where['b.position']   = array('not in','客户处,运营中心');
         //$where['position']   = array('neq','客户处');
         $request = input('request.');
         if (!empty($request['com'])) {
-            $where['com'] = $request['com'];
+            $where['b.com'] = $request['com'];
         }
         if (!empty($request['btype'])) {
-            $where['btype'] = $request['btype'];
+            $where['b.btype'] = $request['btype'];
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project";
         $usersQuery = Db::name('bbjs');
         if (!empty($request['date'])) {
             $dt = $request['date'];
             if($dt == '0'){
-                $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->order("b.id DESC")
+                    ->paginate(10);
             }
             else
             {
-                $list = $usersQuery->where($where)->whereTime('create','>','-'.$dt.' days')->order("id DESC")->paginate(10);
+                $list = $usersQuery->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->whereTime('b.create','>','-'.$dt.' days')
+                    ->order("id DESC")
+                    ->paginate(10);
             }
         }
         else
         {
-            $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("b.id DESC")
+                ->paginate(10);
         }
         // 获取分页显示
         $page = $list->render();
@@ -392,30 +530,53 @@ class BbjsController extends AdminBaseController
     //标本返回客户处
     public function bbfh()
     {
-        $where['isdel']   = 0;
-        $where['position']   = '运营中心';
+        $where['b.isdel']   = 0;
+        $where['b.position']   = '运营中心';
         //$where['position']   = array('neq','客户处');
         $request = input('request.');
         if (!empty($request['com'])) {
-            $where['com'] = $request['com'];
+            $where['b.com'] = $request['com'];
         }
         if (!empty($request['btype'])) {
-            $where['btype'] = $request['btype'];
+            $where['b.btype'] = $request['btype'];
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project";
         $usersQuery = Db::name('bbjs');
         if (!empty($request['date'])) {
             $dt = $request['date'];
             if($dt == '0'){
-                $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->order("b.id DESC")
+                    ->paginate(10);
             }
             else
             {
-                $list = $usersQuery->where($where)->whereTime('create','>','-'.$dt.' days')->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->whereTime('create','>','-'.$dt.' days')
+                    ->order("id DESC")
+                    ->paginate(10);
             }
         }
         else
         {
-            $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("b.id DESC")
+                ->paginate(10);
         }
         // 获取分页显示
         $page = $list->render();
@@ -430,29 +591,52 @@ class BbjsController extends AdminBaseController
     {
         $where['isdel']   = 0;
         if (!empty($request['uname'])) {
-            $where['uname'] = $request['uname'];
+            $where['b.uname'] = $request['uname'];
         }
         $request = input('request.');
         if (!empty($request['com'])) {
-            $where['com'] = $request['com'];
+            $where['b.com'] = $request['com'];
         }
         if (!empty($request['btype'])) {
-            $where['btype'] = $request['btype'];
+            $where['b.btype'] = $request['btype'];
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project";
         $usersQuery = Db::name('bbjs');
         if (!empty($request['date'])) {
             $dt = $request['date'];
             if($dt == '0'){
-                $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->order("id DESC")
+                    ->paginate(10);
             }
             else
             {
-                $list = $usersQuery->where($where)->whereTime('create','>','-'.$dt.' days')->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->whereTime('create','>','-'.$dt.' days')
+                    ->order("id DESC")
+                    ->paginate(10);
             }
         }
         else
         {
-            $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("id DESC")
+                ->paginate(10);
         }
         // 获取分页显示
         $page = $list->render();

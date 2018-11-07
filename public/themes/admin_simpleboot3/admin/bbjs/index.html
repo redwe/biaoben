@@ -73,7 +73,8 @@
                   </php>
               <tr>
                 <td colspan="3">{$vo1.pname} ：&nbsp;&nbsp;
-                    <input type="hidden" name="pid[]" value="{$vo1.pname}">
+                    <input type="hidden" name="pname[]" value="{$vo1.pname}">
+                    <input type="hidden" name="pid[]" value="{$vo1.id}">
                <select name="project[]" id="pro{$vo1.id}">
                    <option value ="">{$vo1.pname}</option>
                    <volist name="parray3" id="vo2">
@@ -83,7 +84,11 @@
                     <a onclick="$(this).parent().remove();">删除</a></td>
               </tr>
               </foreach>
-              <tr><td colspan="3"><A href="{:url('/admin/bbjs/addcom',array('adddo'=>'pro'))}"><input type="button" value="添加检测项目"/></A></td></tr>
+              <tr><td colspan="3">
+                  <A href="{:url('/admin/bbjs/addcom',array('adddo'=>'pro'))}">
+                  <input type="button" value="添加检测项目"/>
+              </A>
+              </td></tr>
               
             </table>
             <div class="xxmt_tab_inputs">

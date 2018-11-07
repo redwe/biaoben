@@ -25,13 +25,13 @@ class XmglController extends AdminBaseController
     //项目管理
     public function index()
     {
-        $where['isdel']   = 0;
+        $where['b.isdel']   = 0;
         $request = input('request.');
         if (!empty($request['uname'])) {
-            $where['uname'] = $request['uname'];
+            $where['b.uname'] = $request['uname'];
         }
         if (!empty($request['xid'])) {
-            $where['xid'] = $request['xid'];
+            $where['b.xid'] = $request['xid'];
         }
         if(isset($request['status']) && $request['status']!="all"){
             if(empty($request['status'])){
@@ -41,22 +41,45 @@ class XmglController extends AdminBaseController
             {
                 $status = 1;
             }
-            $where['status'] = $status;     //intval($request['status']);
+            $where['b.status'] = $status;     //intval($request['status']);
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project,p.mid";
         $usersQuery = Db::name('bbjs');
         if (!empty($request['date'])) {
             $dt = $request['date'];
             if($dt == '0'){
-                $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->order("b.id DESC")
+                    ->paginate(10);
             }
             else
             {
-                $list = $usersQuery->where($where)->whereTime('create','>','-'.$dt.' days')->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->whereTime('create','>','-'.$dt.' days')
+                    ->order("b.id DESC")
+                    ->paginate(10);
             }
         }
         else
         {
-            $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("b.id DESC")
+                ->paginate(10);
         }
         // 获取分页显示
         $page = $list->render();
@@ -77,8 +100,8 @@ class XmglController extends AdminBaseController
 
     public function djlb()
     {
-        $where['isdel']   = 0;
-        $where['status']   = array("<",2);
+        $where['b.isdel']   = 0;
+        $where['b.status']   = array("<",2);
         $request = input('request.');
 
         $where2 = ['adddo'=>"com"];
@@ -89,13 +112,23 @@ class XmglController extends AdminBaseController
         $this->assign('pros', $pros);
 
         if (!empty($request['pid'])) {
-            $where['pid'] = array("like","%".$request['pid']."%");
+            $where['p.pid'] = array("like","%".$request['pid']."%");
         }
         if (!empty($request['com'])) {
-            $where['com'] = $request['com'];
+            $where['b.com'] = $request['com'];
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project,p.mid";
         $usersQuery = Db::name('bbjs');
-        $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+        $list = $usersQuery
+            ->alias('b')
+            ->field($field)
+            ->join($join)
+            ->where($where)
+            ->order("b.id DESC")
+            ->paginate(10);
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
@@ -106,8 +139,8 @@ class XmglController extends AdminBaseController
 
     public function jcz()
     {
-        $where['isdel']   = 0;
-        $where['status']   = 2;
+        $where['b.isdel']   = 0;
+        $where['b.status']   = 2;
         $request = input('request.');
 
         $where2 = ['adddo'=>"com"];
@@ -118,13 +151,23 @@ class XmglController extends AdminBaseController
         $this->assign('pros', $pros);
 
         if (!empty($request['pid'])) {
-            $where['pid'] = array("like","%".$request['pid']."%");
+            $where['p.pid'] = array("like","%".$request['pid']."%");
         }
         if (!empty($request['com'])) {
-            $where['com'] = $request['com'];
+            $where['b.com'] = $request['com'];
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project,p.mid";
         $usersQuery = Db::name('bbjs');
-        $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+        $list = $usersQuery
+            ->alias('b')
+            ->field($field)
+            ->join($join)
+            ->where($where)
+            ->order("b.id DESC")
+            ->paginate(10);
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
@@ -135,8 +178,8 @@ class XmglController extends AdminBaseController
 
     public function jcwc()
     {
-        $where['isdel']   = 0;
-        $where['status']   = 3;
+        $where['b.isdel']   = 0;
+        $where['b.status']   = 3;
         $request = input('request.');
 
         $where2 = ['adddo'=>"com"];
@@ -147,13 +190,22 @@ class XmglController extends AdminBaseController
         $this->assign('pros', $pros);
 
         if (!empty($request['pid'])) {
-            $where['pid'] = array("like","%".$request['pid']."%");
+            $where['p.pid'] = array("like","%".$request['pid']."%");
         }
         if (!empty($request['com'])) {
-            $where['com'] = $request['com'];
+            $where['b.com'] = $request['com'];
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project,p.mid";
         $usersQuery = Db::name('bbjs');
-        $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+        $list = $usersQuery->alias('b')
+            ->field($field)
+            ->join($join)
+            ->where($where)
+            ->order("b.id DESC")
+            ->paginate(10);
         // 获取分页显示
         $page = $list->render();
         $this->assign('list', $list);
@@ -164,13 +216,13 @@ class XmglController extends AdminBaseController
 
     public function jdcx()
     {
-        $where['isdel']   = 0;
+        $where['b.isdel']   = 0;
         $request = input('request.');
         if (!empty($request['uname'])) {
-            $where['uname'] = $request['uname'];
+            $where['b.uname'] = $request['uname'];
         }
         if (!empty($request['xid'])) {
-            $where['xid'] = $request['xid'];
+            $where['b.xid'] = $request['xid'];
         }
         if(isset($request['status']) && $request['status']!="all"){
             if(empty($request['status'])){
@@ -180,22 +232,45 @@ class XmglController extends AdminBaseController
             {
                 $status = 1;
             }
-            $where['status'] = $status;     //intval($request['status']);
+            $where['b.status'] = $status;     //intval($request['status']);
         }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project,p.mid";
         $usersQuery = Db::name('bbjs');
         if (!empty($request['date'])) {
             $dt = $request['date'];
             if($dt == '0'){
-                $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->order("b.id DESC")
+                    ->paginate(10);
             }
             else
             {
-                $list = $usersQuery->where($where)->whereTime('create','>','-'.$dt.' days')->order("id DESC")->paginate(10);
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->whereTime('create','>','-'.$dt.' days')
+                    ->order("b.id DESC")
+                    ->paginate(10);
             }
         }
         else
         {
-            $list = $usersQuery->where($where)->order("id DESC")->paginate(10);
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("b.id DESC")
+                ->paginate(10);
         }
         // 获取分页显示
         $page = $list->render();
