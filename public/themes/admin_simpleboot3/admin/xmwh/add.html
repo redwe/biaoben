@@ -1,0 +1,48 @@
+<include file="public@header"/>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+   <div class="xxmt_right_nr_x">
+        <form>
+          <div class="xxmt_add-search">
+            <div class="xxmt_add">
+              
+            </div>
+            <div class="xxmt_search">
+              
+            </div>
+            <div class="qing"></div>
+          </div>
+        </form>
+        <form  name="addpro" class="js-ajax-form" action="{:url('/admin/xmwh/addpost')}" method="post">
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td colspan="2">项目信息：</td>
+              </tr>
+              <tr>
+                <td>检测项目名称：</td>
+                <td><input type="text" name="pname"  value=""/></td>
+              </tr>
+              <tr>
+                <td>检测项目价格：</td>
+                <td><input type="text" name="price" value=""/></td>
+              </tr>
+              <tr>
+                <td>检测技术平台：</td>
+                <td><input type="text" name="platform" value=""/></td>
+              </tr>
+              <tr>
+                <td>报告模板名称：</td>
+                <td><input type="text" name="template" value=""/></td>
+              </tr>
+            </table>
+            <div class="xxmt_tab_inputs">
+              <input class="btn btn-primary js-ajax-submit" type="submit" value="提交"/>
+            </div>
+          </div>
+        </form>
+      </div>
+   <script src="__STATIC__/js/admin.js"></script>
+ </body>
+</html>

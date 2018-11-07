@@ -1,0 +1,158 @@
+<include file="public@header"/>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+<style type="text/css">
+    .text_do{ width: 360px;}
+</style>
+</head>
+<body>
+   <div class="xxmt_right_nr_x">
+        <form>
+          <div class="xxmt_add-search">
+            <div class="xxmt_add">
+              
+            </div>
+            <div class="xxmt_search">
+              
+            </div>
+            <div class="qing"></div>
+          </div>
+        </form>
+<php>
+if($adddo == 'com'){
+</php>
+        <form  name="addpro1" class="js-ajax-form" action="{:url('/admin/bbjs/addCompost')}" method="post">
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td colspan="2">送检单位：</td>
+              </tr>
+              <tr>
+                <td>单位名称：</td>
+                <td><input type="text" name="pname"  value="{$list.pname}"/></td>
+              </tr>
+              <tr>
+                <td>单位选项值：</td>
+                <td><input type="text" name="price" class="text_do" value="{$list.price}"/></td>
+              </tr>
+             </table>
+            <div class="xxmt_tab_inputs">
+                <input type="hidden" name="adddo"  value="{$adddo}"/>
+              <input class="btn btn-primary js-ajax-submit" type="submit" value="提交"/>
+            </div>
+          </div>
+        </form>
+       <php>
+           }
+          elseif($adddo == 'type'){
+       </php>
+       <form  name="addpro2" class="js-ajax-form" action="{:url('/admin/bbjs/addCompost')}" method="post">
+           <div class="xxmt_tables">
+               <table border="1">
+                   <tr>
+                       <td colspan="2">标本类型：</td>
+                   </tr>
+                   <tr>
+                       <td>类型名称：</td>
+                       <td><input type="text" name="pname" value="{$list.pname}"/></td>
+                   </tr>
+                   <tr>
+                       <td>类型选项值：</td>
+                       <td><input type="text" name="price" class="text_do" value="{$list.price}"/></td>
+                   </tr>
+               </table>
+               <div class="xxmt_tab_inputs">
+                   <input type="hidden" name="adddo"  value="{$adddo}"/>
+                   <input class="btn btn-primary js-ajax-submit" type="submit" value="提交"/>
+               </div>
+           </div>
+       </form>
+       <php>
+           }
+           elseif($adddo == 'shiyan'){
+       </php>
+       <form  name="addpro2" class="js-ajax-form" action="{:url('/admin/bbjs/addCompost')}" method="post">
+           <div class="xxmt_tables">
+               <table border="1">
+                   <tr>
+                       <td colspan="2">设置实验室：</td>
+                   </tr>
+                   <tr>
+                       <td>实验室名称：</td>
+                       <td><input type="text" name="pname" value="{$list.pname}"/></td>
+                   </tr>
+                   <tr>
+                       <td>实验室选项值：</td>
+                       <td><input type="text" name="price" class="text_do" value="{$list.price}"/></td>
+                   </tr>
+               </table>
+               <div class="xxmt_tab_inputs">
+                   <input type="hidden" name="adddo"  value="{$adddo}"/>
+                   <input class="btn btn-primary js-ajax-submit" type="submit" value="提交"/>
+               </div>
+           </div>
+       </form>
+       <php>
+           }
+           elseif($adddo == 'pro'){
+           if(!empty($id)){
+            $pcode = $list2['pcode'];
+            $pname = $list2['pname'];
+            $price = $list2['price'];
+           }
+           else
+           {
+           $pcode = $mcode;
+           $pname = '';
+           $price = '';
+           }
+       </php>
+       <form  name="addpro3" class="js-ajax-form" action="{:url('/admin/bbjs/addCompost')}" method="post">
+           <div class="xxmt_tables">
+               <table border="1">
+                   <tr>
+                       <td colspan="2">检测项目：</td>
+                   </tr>
+                   <tr>
+                       <td>项目编号：</td>
+                       <td><input type="text" name="pcode"  value="{$pcode}"/></td>
+                   </tr>
+                   <tr>
+                       <td>项目名称：</td>
+                       <td><input type="text" name="pname"  value="{$pname}"/></td>
+                   </tr>
+                   <tr>
+                       <td>项目选项：</td>
+                       <td><input type="text" class="text_do" name="price" value="{$price}"/></td>
+                   </tr>
+               </table>
+               <div class="xxmt_tab_inputs">
+                   <input type="hidden" name="id"  value="{$id}"/>
+                   <input type="hidden" name="adddo"  value="{$adddo}"/>
+                   <input class="btn btn-primary js-ajax-submit" type="submit" value="提交"/>
+               </div>
+               <table border="1" style="margin-top: 20px;">
+                   <tr>
+                       <td>ID：</td><td>项目编号：</td> <td>项目名称：</td> <td>项目选项：</td> <td>操作</td>
+                   </tr>
+                   <foreach name="list" item="vo">
+                       <tr>
+                           <td>{$vo.id}</td>
+                           <td>{$vo.pcode}</td>
+                           <td>{$vo.pname}</td>
+                           <td>{$vo.price}</td>
+                           <td>
+                               <a href="{:url('bbjs/addcom',array('id'=>$vo['id'],'adddo'=>'pro'))}">修改</a>
+                               <a href="{:url('bbjs/delcom',array('id'=>$vo['id']))}">删除</a> </td>
+                       </tr>
+                   </foreach>
+               </table>
+               <php>
+                   }
+               </php>
+
+           </div>
+       </form>
+      </div>
+   <script src="__STATIC__/js/admin.js"></script>
+ </body>
+</html>

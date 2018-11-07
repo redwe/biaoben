@@ -1,0 +1,76 @@
+<include file="public@header"/>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="xxmt_right_nr_x">
+    <form>
+        <div class="xxmt_add-search">
+            <div class="xxmt_add">
+                <a href="{:url('admin_index/add')}">新增客户</a>
+            </div>
+            <div class="xxmt_search">
+                <form class="well form-inline margin-top-20" method="post" action="{:url('user/adminIndex/index')}">
+                    用户ID：
+                    <input class="form-control" type="text" name="uid" style="width: 200px;" value="{:input('request.uid')}"
+                           placeholder="请输入用户ID">
+                    关键字：
+                    <input class="form-control" type="text" name="keyword" style="width: 200px;" value="{:input('request.keyword')}"
+                           placeholder="用户名/昵称/邮箱/手机">
+                    <button type="submit">搜索</button>
+                </form>
+            </div>
+            <div class="qing"></div>
+        </div>
+    </form>
+    <form method="post" class="js-ajax-form">
+        <div class="xxmt_tables">
+            <table border="1">
+                <tr>
+                    <th>ID</th>
+                    <th>公司名称</th>
+                    <th>用户名称</th>
+                    <th>{:lang('EMAIL')}</th>
+                    <th>手机</th>
+                    <th>{:lang('REGISTRATION_TIME')}</th>
+                    <th>{:lang('STATUS')}</th>
+                    <th>{:lang('ACTIONS')}</th>
+                </tr>
+                <php>
+                    $user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));
+                </php>
+                <foreach name="list" item="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo['user_login']}
+                        </td>
+                        <td>{$vo['user_nickname']}</td>
+                        <td>{$vo.user_email}</td>
+                        <td>{$vo.mobile}</td>
+                        <td>{:date('Y-m-d H:i:s',$vo['create_time'])}</td>
+                        <td>{$user_statuses[$vo['user_status']]}</td>
+                        <td>
+                            <neq name="vo.id" value="1">
+                                <empty name="vo.user_status">
+                                    <a href="{:url('adminIndex/cancelban',array('id'=>$vo['id']))}"
+                                       class="js-ajax-dialog-btn"
+                                       data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                                    <else/>
+                                    <a href="{:url('adminIndex/ban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn"
+                                       data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+                                </empty>
+                                <else/>
+                                <a style="color: #ccc;">{:lang('BLOCK_USER')}</a>
+                            </neq>
+                        </td>
+                    </tr>
+                </foreach>
+            </table>
+            <div class="pagination">{$page}</div>
+        </div>
+    </form>
+
+</div>
+
+<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

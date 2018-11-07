@@ -1,0 +1,128 @@
+<include file="public@header" />
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="xxmt_right_nr_x">
+        <form>
+            <div class="xxmt_add-search">
+                <div class="xxmt_add">
+                       <a href="{:url('rbac/index')}">{:lang('ADMIN_RBAC_INDEX')}</a>
+                 </div>
+                <div class="xxmt_search">
+
+                </div>
+                <div class="qing"></div>
+            </div>
+        </form>
+        <form class="form-horizontal js-ajax-form margin-top-20" action="{:url('rbac/roleAddPost')}" method="post">
+            <div class="xxmt_tables">
+                <table border="1">
+                    <tr>
+                        <td colspan="2">用户组信息</td>
+                    </tr>
+                    <tr>
+                        <td>{:lang('ROLE_NAME')}</td>
+                        <td><input type="text" class="form-control" id="input-name" name="name"></td>
+                    </tr>
+                    <tr>
+                        <td>
+                            {:lang('ROLE_DESCRIPTION')}
+                        </td>
+                        <td>
+                            <textarea type="text" class="form-control" id="input-remark" name="remark"></textarea>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>{:lang('STATUS')}</td>
+                        <td>
+                            <label class="radio-inline">
+                                <input type="radio" name="status" value="1"> {:lang('ENABLED')}
+                            </label>
+                            <label class="radio-inline">
+                                <input type="radio" name="status" value="0"> {:lang('DISABLED')}
+                            </label>
+                        </td>
+                    </tr>
+                    <!----
+                    <tr>
+                        <td rowspan="10">权限分配</td>
+                        <td>系统管理：</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><input type="checkbox" value=""/>账号管理</li>
+                                <li><input type="checkbox" value=""/>权限管理</li>
+                                <li><input type="checkbox" value=""/>用户组</li>
+                                <li><input type="checkbox" value=""/>项目维护</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>标本寄送：</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><input type="checkbox" value=""/>手工登记</li>
+                                <li><input type="checkbox" value=""/>标本管理</li>
+                                <li><input type="checkbox" value=""/>样本接收</li>
+                                <li><input type="checkbox" value=""/>样本分发</li>
+                                <li><input type="checkbox" value=""/>样本回收</li>
+                                <li><input type="checkbox" value=""/>样本返还</li>
+                                <li><input type="checkbox" value=""/>样本位置</li>
+
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>项目管理：</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><input type="checkbox" value=""/>修改项目</li>
+                                <li><input type="checkbox" value=""/>待检列表</li>
+                                <li><input type="checkbox" value=""/>检测中</li>
+                                <li><input type="checkbox" value=""/>检测完成</li>
+                                <li><input type="checkbox" value=""/>进度查询</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>检测报告：</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><input type="checkbox" value=""/>报告录入</li>
+                                <li><input type="checkbox" value=""/>报告审核</li>
+                                <li><input type="checkbox" value=""/>检测完成</li>
+                                <li><input type="checkbox" value=""/>发送邮件</li>
+                            </ul>
+                        </td>
+                    </tr>
+                    <tr>
+                        <td>业务统计：</td>
+                    </tr>
+                    <tr>
+                        <td>
+                            <ul>
+                                <li><input type="checkbox" value=""/>项目统计</li>
+                                <li><input type="checkbox" value=""/>对账单</li>
+                            </ul>
+                        </td>
+                    </tr>
+//--->
+                </table>
+                <div class="xxmt_tab_inputs">
+                    <button type="submit" class="btn btn-primary js-ajax-submit">{:lang('ADD')}</button>
+                </div>
+            </div>
+        </form>
+
+    </div>
+
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,58 @@
+<include file="public@header" />
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+    <div class="xxmt_right_nr_x">
+        <form>
+            <div class="xxmt_add-search">
+                <div class="xxmt_add">
+                    <a href="{:url('rbac/roleadd')}">添加用户组</a>
+                </div>
+                <div class="xxmt_search">
+
+                </div>
+                <div class="qing"></div>
+            </div>
+        </form>
+        <form>
+            <div class="xxmt_tables">
+                <table border="1">
+                    <tr>
+                        <th width="40">ID</th>
+                        <th align="center">{:lang('ROLE_NAME')}</th>
+                        <th align="center">{:lang('ROLE_DESCRIPTION')}</th>
+                        <th width="60" align="center">{:lang('STATUS')}</th>
+                        <th width="160">{:lang('ACTIONS')}</th>
+                    </tr>
+                    <foreach name="roles" item="vo">
+                        <tr>
+                            <td>{$vo.id}</td>
+                            <td>{$vo.name}</td>
+                            <td>{$vo.remark}</td>
+                            <td>
+                                <if condition="$vo['status'] eq 1">
+                                    <font color="red">√</font>
+                                    <else />
+                                    <font color="red">╳</font>
+                                </if>
+                            </td>
+                            <td>
+                                <if condition="$vo['id'] eq 1">
+                                    <font color="#cccccc">{:lang('ROLE_SETTING')}</font>  <!-- <a href="javascript:openIframeDialog('{:url('rbac/member',array('id'=>$vo['id']))}','成员管理');">成员管理</a> | -->
+                                    <font color="#cccccc">{:lang('EDIT')}</font>  <font color="#cccccc">{:lang('DELETE')}</font>
+                                    <else />
+                                    <a href="{:url('Rbac/authorize',array('id'=>$vo['id']))}">{:lang('ROLE_SETTING')}</a>
+                                    <!-- <a href="javascript:openIframeDialog('{:url('rbac/member',array('id'=>$vo['id']))}','成员管理');">成员管理</a>| -->
+                                    <a href="{:url('Rbac/roleedit',array('id'=>$vo['id']))}">{:lang('EDIT')}</a>
+                                    <a class="js-ajax-delete" href="{:url('Rbac/roledelete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                                </if>
+                            </td>
+                        </tr>
+                    </foreach>
+                </table>
+            </div>
+        </form>
+    </div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

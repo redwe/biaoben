@@ -1,0 +1,62 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>系统管理-数据备份/恢复</title>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+      <div class="xxmt_right_nr_x">
+        <form name="backupform" action="{:url('admin/backup/dblist')}" method="post" class="js-ajax-form">
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td colspan="5">数据备份：</td>
+              </tr>
+              <tr>
+                <td>备份文件地址：</td>
+                <td colspan="4">
+                    <input type="text" name="dirname" value="/data/backup/"/>&nbsp;&nbsp;
+                    <input type="submit" class="js-ajax-submit" value=" 查看所有数据表 "/> &nbsp;
+                </td>
+              </tr>
+              <tr>
+                <td>备份说明：</td>
+                <td colspan="4">*备份数据存放目录默认为data/backup,需要有写入权限，不建议修改其他位置</td>
+              </tr>
+         </table>
+         </div>
+         </form>
+          <form name="backupform" action="" method="post" class="js-ajax-form">
+              <div class="xxmt_tables">
+              <table border="1">
+              <tr class="bgc_l">
+                <td colspan="5">数据恢复：</td>
+              </tr>
+              <tr>
+                <td>序号</td>
+                <td>备份时间</td>
+                <td>备份文件</td>
+                <td>操作</td>
+              </tr>
+             <volist name="files" id="vo">
+              <tr>
+                <td>{$key+1}</td>
+                <td>{:date("Y-m-d H:i:s",$vo['ftime'])}</td>
+                <td>{$vo.fname}</td>
+                <td>
+                    <a onclick="confirm('因版本或编码等因素，恢复数据可能会造成数据丢失，您确定要操作吗？')" href="{:url('admin/backup/import',array('url'=>$vo['fname']))}">恢复数据</a> |
+                    <a href="{:url('admin/backup/download',array('url'=>$vo['fname']))}">下载</a> |
+                    <a href="{:url('admin/backup/delete',array('url'=>$vo['fname']))}">删除</a>
+                 </td>
+              </tr>
+             </volist>
+           </table>
+            <div class="xxmt_tab_inputs"></div>
+          </div>
+        </form>
+        
+      </div>
+</body>
+</html>

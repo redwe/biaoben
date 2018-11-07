@@ -1,0 +1,103 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>标本寄送-标本回收</title>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+<script type="text/javascript"src="__TMPL__/public/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+		//checkbox 全选/取消全选
+		var isCheckAll = false;
+		function swapCheck() {
+			if (isCheckAll) {
+				$("input[type='checkbox']").each(function() {
+					this.checked = false;
+				});
+				isCheckAll = false;
+			} else {
+				$("input[type='checkbox']").each(function() {
+					this.checked = true;
+				});
+				isCheckAll = true;
+			}
+		}
+	</script>
+</head>
+<body>
+   <div class="xxmt_right_nr_x">
+       <form name="search" action="" method="post">
+          <div class="xxmt_add-search">
+            <div class="xxmt_add">
+
+            </div>
+            <div class="xxmt_search">
+
+              <select>
+                <option value ="全部时间">全部时间</option>
+                <option value ="近3天">近3天</option>
+                <option value ="近7天">近7天</option>
+                <option value ="近1月">近1月</option>
+              </select>
+              <select>
+                <option value ="标本类型">标本类型</option>
+                <option value ="蜡块1">蜡块1</option>
+                <option value ="蜡块1">蜡块1</option>
+                <option value ="蜡块1">蜡块1</option>
+              </select>
+              <select>
+                <option value ="送检单位">送检单位</option>
+                <option value ="单位a">单位a</option>
+                <option value ="单位b">单位b</option>
+                <option value ="单位c">单位c</option>
+              </select>
+              <button type="submit">搜索</button>
+            </div>
+            <div class="qing"></div>
+          </div>
+        </form>
+       <form name="search" action="{:url('admin/bbjs/getAll')}" method="post">
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td><input type="checkbox" value="" onclick="swapCheck()"/></td>
+                <td>序号</td>
+                <td>姓名</td>
+                <td>标本号</td>
+                <td>检测项目</td>
+                <td>登记时间</td>
+                <td>送检单位</td>
+                <td>实验室</td>
+                <td>标本类型</td>
+              </tr>
+           <foreach name="list" item="vo">
+              <tr>
+                <td><input type="checkbox"  name="checkid[]" value="{$vo.id}"/></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.uname}</td>
+                <td>{$vo.code}</td>
+                <td>
+                    <php>
+                        $vo['project'] = unserialize($vo['project']);
+                        //dump($vo['project']);
+                    </php>
+                    <foreach name="vo['project']" item="vo2">
+                        {$vo2}、
+                    </foreach>
+                </td>
+                <td>{$vo.create}</td>
+                <td>{$vo.com}</td>
+                <td>{$vo.labs}</td>
+                <td>{$vo.btype}</td>
+              </tr>
+           </foreach>
+            </table>
+            <div class="xxmt_tab_inputs">
+              <input type="hidden" name="stu" value="3">
+              <input type="submit" value="回收确认"/>
+            </div>
+          </div>
+        </form>
+        <div class="fenye"> {$page} </div>
+      </div>
+ </body>
+</html>

@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>检测报告-报告审核</title>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+<script type="text/javascript"src="__TMPL__/public/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+		//checkbox 全选/取消全选
+		var isCheckAll = false;
+		function swapCheck() {
+			if (isCheckAll) {
+				$("input[type='checkbox']").each(function() {
+					this.checked = false;
+				});
+				isCheckAll = false;
+			} else {
+				$("input[type='checkbox']").each(function() {
+					this.checked = true;
+				});
+				isCheckAll = true;
+			}
+		}
+	</script>
+</head>
+
+<body>
+  <div class="xxmt_right_nr_x">
+        <form>
+          <div class="xxmt_add-search">
+            <div class="xxmt_add">
+            
+            </div>
+            <div class="xxmt_search">
+              <input type="text" placeholder="姓名"/>
+              <input type="text" placeholder="标本号"/>
+              <select>
+                <option value ="全部时间">全部时间</option>
+                <option value ="近3天">近3天</option>
+                <option value ="近7天">近7天</option>
+                <option value ="近1月">近1月</option>
+              </select>
+              <select>
+                <option value ="报告状态">报告状态</option>
+                <option value ="未录入">未录入</option>
+                <option value ="未录入">录入中</option>
+                <option value ="未录入">已录入</option>
+              </select>
+              <button type="submit">搜索</button> 
+            </div>
+            <div class="qing"></div>
+          </div>
+        </form>
+        <form>
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td><input type="checkbox" value="" onclick="swapCheck()"/></td>
+                <td>序号</td>
+                <td>姓名</td>
+                <td>标本号</td>
+                <td>检测项目</td>
+                <td>项目编号</td>
+                <td>检测进度</td>
+                <td>报告</td>
+                <td>报告状态</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" value=""/></td>
+                <td>1</td>
+                <td>张三</td>
+                <td>X201800002</td>
+                <td>PD-L1</td>
+                <td>M2018-00001</td>
+                <td>已完成</td>
+                <td><a href="#">编辑</a></td>
+                <td>已录入</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" value=""/></td>
+                <td>1</td>
+                <td>张三</td>
+                <td>X201800002</td>
+                <td>PD-L1</td>
+                <td>M2018-00001</td>
+                <td>已完成</td>
+                <td><a href="#">编辑</a></td>
+                <td>已录入</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" value=""/></td>
+                <td>1</td>
+                <td>张三</td>
+                <td>X201800002</td>
+                <td>PD-L1</td>
+                <td>M2018-00001</td>
+                <td>已完成</td>
+                <td><a href="#">编辑</a></td>
+                <td>已录入</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" value=""/></td>
+                <td>1</td>
+                <td>张三</td>
+                <td>X201800002</td>
+                <td>PD-L1</td>
+                <td>M2018-00001</td>
+                <td>已完成</td>
+                <td><a href="#">编辑</a></td>
+                <td>已录入</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" value=""/></td>
+                <td>1</td>
+                <td>张三</td>
+                <td>X201800002</td>
+                <td>PD-L1</td>
+                <td>M2018-00001</td>
+                <td>已完成</td>
+                <td><a href="#">编辑</a></td>
+                <td>已录入</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" value=""/></td>
+                <td>1</td>
+                <td>张三</td>
+                <td>X201800002</td>
+                <td>PD-L1</td>
+                <td>M2018-00001</td>
+                <td>已完成</td>
+                <td><a href="#">编辑</a></td>
+                <td>已录入</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" value=""/></td>
+                <td>1</td>
+                <td>张三</td>
+                <td>X201800002</td>
+                <td>PD-L1</td>
+                <td>M2018-00001</td>
+                <td>已完成</td>
+                <td><a href="#">编辑</a></td>
+                <td>已录入</td>
+              </tr>
+              <tr>
+                <td><input type="checkbox" value=""/></td>
+                <td>1</td>
+                <td>张三</td>
+                <td>X201800002</td>
+                <td>PD-L1</td>
+                <td>M2018-00001</td>
+                <td>已完成</td>
+                <td><a href="#">编辑</a></td>
+                <td>已录入</td>
+              </tr>
+            </table>
+            <div class="xxmt_tab_inputs">
+              <input type="submit" value="审核"/>
+            </div>
+          </div>
+        </form>
+        <div class="fenye"> <a href="#"> << </a> <a href="#"> < </a> <b>1</b> <a href="#"> 2 </a> <a href="#"> 3 </a> <a href="#"> > </a> <a href="#"> >> </a> </div>
+      </div>
+</body>
+</html>

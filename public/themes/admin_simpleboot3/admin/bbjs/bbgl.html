@@ -1,0 +1,105 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>标本寄送-标本管理</title>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+<script type="text/javascript"src="__TMPL__/public/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+		//checkbox 全选/取消全选
+		var isCheckAll = false;
+		function swapCheck() {
+			if (isCheckAll) {
+				$("input[type='checkbox']").each(function() {
+					this.checked = false;
+				});
+				isCheckAll = false;
+			} else {
+				$("input[type='checkbox']").each(function() {
+					this.checked = true;
+				});
+				isCheckAll = true;
+			}
+		}
+	</script>
+</head>
+<body>
+  <div class="xxmt_right_nr_x">
+
+          <div class="xxmt_add-search">
+
+            <div class="xxmt_add">
+              <a href="{:url('admin/bbjs/index')}">添加信息</a>
+            </div>
+           <form name="search" action="{:url('admin/bbjs/bbgl')}" method="post">
+            <div class="xxmt_search">
+              <input type="text" name="uname" placeholder="姓名"/>
+              <input type="text" name="xid" placeholder="标本号"/>
+              <select name="date">
+                <option value ="0">全部时间</option>
+                <option value ="3">近3天</option>
+                <option value ="7">近7天</option>
+                <option value ="30">近1月</option>
+              </select>
+              <select name="status">
+                    <option value ="all">标本状态</option>
+                    <option value ="0">未接收</option>
+                    <option value ="1">已接收</option>
+                    <option value ="2">已分发</option>
+                    <option value ="3">已回收</option>
+                    <option value ="4">已返还</option>
+                </select>
+              <button type="submit">搜索</button>
+            </div>
+           </form>
+            <div class="qing"></div>
+          </div>
+
+      <form name="search" action="{:url('admin/bbjs/delall')}" method="post">
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td><input type="checkbox" value="" onclick="swapCheck()"/></td>
+                <td>序号</td>
+                <td>姓名</td>
+                <td>标本号</td>
+                <td>检测项目</td>
+                <td>登记时间</td>
+                <td>标本状态</td>
+                  <td>备注</td>
+                <td>操作</td>
+              </tr>
+          <foreach name="list" item="vo">
+              <tr>
+                <td><input type="checkbox" name="checkid[]" value="{$vo.id}"/></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.uname}</td>
+                <td>{$vo.xid}</td>
+                <td>
+                    <php>
+                        $vo['project'] = unserialize($vo['project']);
+                        //dump($vo['project']);
+                    </php>
+                    <foreach name="vo['project']" item="vo2">
+                       {$vo2}、
+                    </foreach>
+                </td>
+                <td>{$vo.create}</td>
+                <td>{:get_status($vo['status'])}</td>
+                <td>{$vo.mark}</td>
+                <td><div>
+                    <a href="{:url('bbjs/edit',array('id'=>$vo['id']))}">修改</a> /
+                    <a href="{:url('bbjs/del',array('id'=>$vo['id']))}">删除</a></div></td>
+              </tr>
+            </foreach>
+            </table>
+            <div class="xxmt_tab_inputs">
+                <input type="submit" value="批量删除"/>
+                <input type="button" value="打印清单"/>
+            </div>
+          </div>
+        </form>
+        <div class="fenye">{$page}</div>
+      </div>
+</body>
+</html>

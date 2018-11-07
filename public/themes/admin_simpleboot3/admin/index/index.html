@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="zh_CN" style="overflow: hidden;">
+<head>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <!-- Set render engine for 360 browser -->
+    <meta name="renderer" content="webkit">
+    <meta charset="utf-8">
+    <title>{:lang('ADMIN_CENTER')}</title>
+    <meta name="description" content="This is page-header (.page-header &gt; h1)">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="__TMPL__/public/assets/js/jquery.min.js"></script>
+    <!-- HTML5 shim for IE8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+    <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+    <![endif]-->
+    <link href="__TMPL__/public/assets/simpleboot3/css/simplebootadmin.css" rel="stylesheet">
+    <link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+    <link href="__STATIC__/font-awesome/css/font-awesome.min.css?page=index" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="__TMPL__/public/assets/themes/{:cmf_get_admin_style()}/simplebootadminindex.min.css">
+    <!--[if lt IE 9]>
+    <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <script>
+        //全局变量
+        var GV = {
+            HOST: "{$_SERVER['HTTP_HOST']}",
+            ROOT: "__ROOT__/",
+            WEB_ROOT: "__WEB_ROOT__/",
+            JS_ROOT: "static/js/"
+        };
+    </script>
+    <style type="text/css">
+        .btn-sm{ padding: 0 10px 0 10px;}
+    </style>
+</head>
+
+<body style="min-width:900px;overflow: hidden;">
+
+<div class="xxmt">
+  <div class="xxmt_left">
+    
+    <div class="xxmt_logo">
+                <div><img src="__TMPL__/public/assets/images/xxmt_logo_03.png"/></div>
+        </div>
+        <div class="sidebar-shortcuts" id="sidebar-shortcuts">
+            <a class="btn btn-sm btn-warning" href="__ROOT__/admin/index"
+               title="{:lang('WEBSITE_HOME_PAGE')}"
+               target="_blank">
+                <i class="fa fa-home"></i>
+            </a>
+
+            <if condition="cmf_auth_check(cmf_get_current_admin_id(),'user/AdminAsset/index')">
+                <a class="btn btn-sm btn-info"
+                   href="javascript:openapp('{:url('user/AdminAsset/index')}','userAdminAssetindex','资源管理',true);"
+                   title="资源管理">
+                    <i class="fa fa-file"></i>
+                </a>
+            </if>
+
+            <if condition="cmf_auth_check(cmf_get_current_admin_id(),'admin/Setting/clearcache')">
+                <a class="btn btn-sm btn-danger"
+                   href="javascript:openapp('{:url('admin/Setting/clearcache')}','index_clearcache','{:lang('ADMIN_SETTING_CLEARCACHE')}',true);"
+                   title="{:lang('ADMIN_SETTING_CLEARCACHE')}">
+                    <i class="fa fa-trash-o"></i>
+                </a>
+            </if>
+
+            <if condition="cmf_auth_check(cmf_get_current_admin_id(),'admin/RecycleBin/index')">
+                <a class="btn btn-sm btn-danger"
+                   href="javascript:openapp('{:url('admin/RecycleBin/index')}','index_recycle','回收站',true);"
+                   title="回收站">
+                    <i class="fa fa-recycle"></i>
+                </a>
+            </if>
+
+            <if condition="APP_DEBUG">
+                <a class="btn btn-sm btn-default"
+                   href="javascript:openapp('{:url('admin/Menu/index')}','index_menu','{:lang('ADMIN_MENU_INDEX')}',true);"
+                   title="{:lang('ADMIN_MENU_INDEX')}">
+                    <i class="fa fa-list"></i>
+                </a>
+            </if>
+
+        </div>
+    <div class="xxmt_left_sidebar">
+       <include file="public@left"/>    
+    </div>
+
+    </div>
+
+    <div class="xxmt_right">
+    
+    <div class="xxmt_right_top">
+        <div class="xxmt_right_topx">
+          <div class="xxmt_right_nav">
+            <ul id="top_menu">
+              <li id="bbjs"><a <php>if($do=='bbjs'){</php> class="top_active" <php>}</php> href="/public/admin/index/index/do/bbjs">标本寄送</a></li>
+              <li id="xmgl"><a <php>if($do=='xmgl'){</php> class="top_active" <php>}</php> href="/public/admin/index/index/do/xmgl">项目管理</a></li>
+              <li id="jcbg"><a <php>if($do=='jcbg'){</php> class="top_active" <php>}</php> href="/public/admin/index/index/do/jcbg">检测报告</a></li>
+              <li id="ywtj"><a <php>if($do=='ywtj'){</php> class="top_active" <php>}</php> href="/public/admin/index/index/do/ywtj">业务统计</a></li>
+              <li id="sys"><a <php>if($do=='sys'){</php> class="top_active" <php>}</php> href="/public/admin/index/index/do/sys">系统管理</a></li>
+            </ul>
+          </div>
+          <div class="xxmt_right_account">
+              <a id="refresh-wrapper" href="javacript:void(0);" title="{:lang('REFRESH_CURRENT_PAGE')}" style="color:#aaa;font-size: 18px">
+                  <i class="fa fa-refresh right_tool_icon"></i>
+              </a>
+              &nbsp;
+            账号：{:lang('WELCOME_USER',array('user_nickname' => empty($admin['user_nickname'] )? $admin['user_login'] : $admin['user_nickname']))}
+            &nbsp; [ <a href="javascript:openapp('{:url('setting/password')}','index_password','{:lang('ADMIN_SETTING_PASSWORD')}');"><i class="fa fa-lock"></i> {:lang('ADMIN_SETTING_PASSWORD')}</a> ] 
+            [ <a href="{:url('Public/logout')}"><i class="fa fa-sign-out"></i> {:lang('LOGOUT')}</a> ] 
+          </div>
+        </div>
+        <div class="xxmt_breadcrumb">位置：{$navlist} > <span id="subnav">{$subnav}</span></div>
+
+      </div>
+        <div class="page-content" id="content">
+            <iframe src="{:url($default_url)}" style="width:100%;height: 90vh;" frameborder="0" id="appiframe-0" class="appiframe"></iframe>
+        </div>
+    </div>
+</div>
+<script src="__STATIC__/js/wind.js"></script>
+<script src="__TMPL__/public/assets/js/bootstrap.min.js"></script>
+<script src="__STATIC__/js/admin.js"></script>
+<script src="__TMPL__/public/assets/simpleboot3/js/adminindex.js"></script>
+</body>
+</html>

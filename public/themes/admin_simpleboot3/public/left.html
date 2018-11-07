@@ -1,0 +1,253 @@
+<php>
+if($do=="bbjs"){
+$default_url = "admin/bbjs/index";
+$navlist = "<a href='/public/admin/index/index/do/bbjs'>标本寄送</a>  ";
+$subnav = " <a href='#'>手工登记</a>";
+</php>
+    <ul class="navlist_ul">
+        <php>
+            if(cmf_auth_check($uid, "admin/bbjs/index")){
+        </php>
+        <li id="nav0" class="xxmt_sidebar_sele"><a href="javascript:openapp('/public/admin/bbjs/index.html','nav0','手工登记',true);">
+          <div><img src="__TMPL__/public/assets/images/nav_icon_03.png"/></div>
+          <p>手工登记</p>
+          <span>〉 </span></a></li>
+        <php>
+            }
+            if(cmf_auth_check($uid, "admin/bbjs/bbgl")){
+        </php>
+        <li id="nav1"><a href="javascript:openapp('/public/admin/bbjs/bbgl.html','nav1','标本管理',true);">
+          <div><img src="__TMPL__/public/assets/images/nav_icon_06.png"/></div>
+          <p>标本管理</p>
+          <span>〉 </span></a></li>
+        <php>
+            }
+            if(cmf_auth_check($uid, "admin/bbjs/bbjs")){
+        </php>
+        <li id="nav2"><a href="javascript:openapp('/public/admin/bbjs/bbjs.html','nav2','标本接收',true);">
+          <div><img src="__TMPL__/public/assets/images/nav_icon_08.png"/></div>
+          <p>标本接收</p>
+          <span>〉 </span></a></li>
+        <php>
+            }
+            if(cmf_auth_check($uid, "admin/bbjs/bbff")){
+        </php>
+        <li id="nav3"><a href="javascript:openapp('/public/admin/bbjs/bbff.html','nav3','标本分发',true);">
+          <div><img src="__TMPL__/public/assets/images/nav_icon_10.png"/></div>
+          <p>标本分发</p>
+          <span>〉 </span></a></li>
+        <php>
+            }
+            if(cmf_auth_check($uid, "admin/bbjs/bbhs")){
+        </php>
+        <li id="nav4"><a href="javascript:openapp('/public/admin/bbjs/bbhs.html','nav4','标本回收',true);">
+          <div><img src="__TMPL__/public/assets/images/nav_icon_12.png"/></div>
+          <p>标本回收</p>
+          <span>〉 </span></a></li>
+        <php>
+            }
+            if(cmf_auth_check($uid, "admin/bbjs/bbfh")){
+        </php>
+        <li id="nav5"><a href="javascript:openapp('/public/admin/bbjs/bbfh.html','nav5','标本返还',true);">
+          <div><img src="__TMPL__/public/assets/images/nav_icon_14.png"/></div>
+          <p>标本返还</p>
+          <span>〉 </span></a></li>
+        <php>
+            }
+            if(cmf_auth_check($uid, "admin/bbjs/bbwz")){
+        </php>
+        <li id="nav6"><a href="javascript:openapp('/public/admin/bbjs/bbwz.html','nav6','标本位置',true);">
+          <div><img src="__TMPL__/public/assets/images/nav_icon_16.png"/></div>
+          <p>标本位置</p>
+          <span>〉 </span ></a></li>
+        <php>
+            }
+        </php>
+      </ul>
+ <php>
+ }
+ elseif($do=="jcbg"){
+ $default_url = "admin/jcbg/index";
+     $navlist = "<a href='/public/admin/index/index/do/jcbg'>检测报告</a>  ";
+     $subnav = " <a href='#'>报告录入</a>";
+ </php>
+<ul class="navlist_ul">
+    <php>
+        if(cmf_auth_check($uid, "admin/jcbg/index")){
+    </php>
+    <li id="nav7" class="xxmt_sidebar_sele"><a href="javascript:openapp('/public/admin/jcbg/index.html','nav7','报告录入',true);">
+        <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+        <p>报告录入</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+        if(cmf_auth_check($uid, "admin/jcbg/bgsh")){
+    </php>
+    <li id="nav8"><a href="javascript:openapp('/public/admin/jcbg/bgsh.html','nav8','报告审核',true);">
+        <div><img src="__TMPL__/public/assets/images/jcbg_icon_06.png"/></div>
+        <p>报告审核</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+        if(cmf_auth_check($uid, "admin/jcbg/bgcx")){
+    </php>
+    <li id="nav9"><a href="javascript:openapp('/public/admin/jcbg/bgcx.html','nav9','报告查询',true);">
+        <div><img src="__TMPL__/public/assets/images/jcbg_icon_08.png"/></div>
+        <p>报告查询</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+        if(cmf_auth_check($uid, "admin/jcbg/fsyj")){
+    </php>
+    <li id="nav10"><a href="javascript:openapp('/public/admin/jcbg/fsyj.html','nav10','发送邮件',true);">
+        <div><img src="__TMPL__/public/assets/images/jcbg_icon_10.png"/></div>
+        <p>发送邮件</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+    </php>
+</ul>
+ <php>
+ }
+ elseif($do=="xmgl"){
+  $default_url = "admin/xmgl/index";
+     $navlist = "<a href='/public/admin/index/index/do/xmgl'>项目管理</a> ";
+     $subnav = " <a href='#'>修改项目</a>";
+ </php>
+<ul class="navlist_ul">
+    <php>
+        if(cmf_auth_check($uid, "admin/xmgl/index")){
+    </php>
+    <li id="nav11" class="xxmt_sidebar_sele"><a href="javascript:openapp('/public/admin/xmgl/index.html','nav11','修改项目',true);">
+        <div><img src="__TMPL__/public/assets/images/nav_icon_06.png"/></div>
+        <p>修改项目</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+        if(cmf_auth_check($uid, "admin/xmgl/djlb")){
+    </php>
+    <li id="nav12"><a href="javascript:openapp('/public/admin/xmgl/djlb.html','nav12','待检列表',true);">
+        <div><img src="__TMPL__/public/assets/images/nav_icon_08.png"/></div>
+        <p>待检列表</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+        if(cmf_auth_check($uid, "admin/xmgl/jcz")){
+    </php>
+    <li id="nav13"><a href="javascript:openapp('/public/admin/xmgl/jcz.html','nav13','检测中',true);">
+        <div><img src="__TMPL__/public/assets/images/nav_icon_10.png"/></div>
+        <p>检测中</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+        if(cmf_auth_check($uid, "admin/xmgl/jcwc")){
+    </php>
+    <li id='nav131'><a href="javascript:openapp('/public/admin/xmgl/jcwc.html','nav131','检测完成',true);">
+        <div><img src="__TMPL__/public/assets/images/nav_icon_10.png"/></div>
+        <p>检测完成</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+        if(cmf_auth_check($uid, "admin/xmgl/jdcx")){
+    </php>
+    <li id="nav14"><a href="javascript:openapp('/public/admin/xmgl/jdcx.html','nav14','进度查询',true);">
+        <div><img src="__TMPL__/public/assets/images/nav_icon_12.png"/></div>
+        <p>进度查询</p>
+        <span>〉 </span></a></li>
+    <php>
+        }
+    </php>
+</ul>
+ <php>
+ }
+ elseif($do=="ywtj"){
+ $default_url = "admin/ywtj/index";
+ $navlist = "<a href='/public/admin/index/index/do/ywtj'>业务统计</a> ";
+ $subnav = " <a href='#'>项目统计</a>";
+ </php>
+  <ul class="navlist_ul">
+      <php>
+          if(cmf_auth_check($uid, "admin/ywtj/index")){
+      </php>
+        <li id="nav15" class="xxmt_sidebar_sele"><a href="javascript:openapp('/public/admin/ywtj/index.html','nav15','项目统计',true);">
+          <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+          <p>项目统计</p>
+          <span>〉 </span></a></li>
+      <php>
+          }
+      </php>
+        <!--<li><a href="#">
+          <div><img src="images/jcbg_icon_06.png"/></div>
+          <p>对账单</p>
+          <span>〉 </span></a></li>-->
+      </ul>
+ <php>
+ }
+ else{
+ $default_url = "admin/main/index";
+ $navlist = "<a href='/public/admin/index/index/do/sys'>系统管理</a> ";
+ $subnav = " <a href='#'>账号管理</a>";
+ </php>
+ <ul class="navlist_ul">
+     <li id="nav26" class="xxmt_sidebar_sele"><a href="javascript:openapp('/public/admin/main/index.html','nav26','后台首页',true);">
+         <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+         <p>后台首页</p>
+         <span>〉 </span></a></li>
+     <php>
+         if(cmf_auth_check($uid, "admin/user/index")){
+     </php>
+        <li id="nav16" class="xxmt_sidebar_sele"><a href="javascript:openapp('/public/admin/user/index.html','nav16','管理员',true);">
+          <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+          <p>账号管理</p>
+          <span>〉 </span></a></li>
+     <php>
+         }
+         if(cmf_auth_check($uid, "admin/rbac/index")){
+     </php>
+        <!--<li><a href="#">
+          <div><img src="images/jcbg_icon_03.png"/></div>
+          <p>权限管理 </p>
+          <span>〉 </span></a></li>-->
+        <li id="nav17"><a href="javascript:openapp('/public/admin/rbac/index.html','nav17','角色管理',true);">
+          <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+          <p>用户组 </p>
+          <span>〉 </span></a></li>
+     <php>
+         }
+         if(cmf_auth_check($uid, "admin/xmwh/index")){
+     </php>
+        <li id="nav18"><a href="javascript:openapp('/public/admin/xmwh/index.html','nav18','项目维护',true);">
+          <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+          <p>项目维护  </p>
+          <span>〉 </span></a></li>
+     <php>
+         }
+         if(cmf_auth_check($uid, "admin/member/index")){
+     </php>
+        <li id="nav19"><a href="javascript:openapp('/public/admin/member/index.html','nav19','客户管理',true);">
+          <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+          <p>客户管理  </p>
+          <span>〉 </span></a></li>
+     <php>
+         }
+         if(cmf_auth_check($uid, "admin/backup/index")){
+     </php>
+        <li id="nav20"><a href="javascript:openapp('/public/admin/backup/index.html','nav20','数据备份',true);">
+          <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+          <p>数据备份/恢复 </p>
+          <span>〉 </span></a></li>
+     <php>
+         }
+         if(cmf_auth_check($uid, "admin/mailer/index")){
+     </php>
+        <li id="nav21"><a href="javascript:openapp('/public/admin/mailer/index.html','nav21','邮箱设置',true);">
+         <div><img src="__TMPL__/public/assets/images/jcbg_icon_03.png"/></div>
+         <p>邮箱配置  </p>
+         <span>〉 </span></a></li>
+     <php>
+         }
+     </php>
+      </ul>
+ <php>
+ }
+ </php>

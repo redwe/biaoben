@@ -1,0 +1,79 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>检测报告-报告录入</title>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+
+</head>
+
+<body>
+  <div class="xxmt_right_nr_x">
+        <form name="search" action="{:url('admin/xmgl/index')}" method="post">
+          <div class="xxmt_add-search">
+            <div class="xxmt_add">
+            
+            </div>
+            <div class="xxmt_search">
+              <input type="text" name="uname"  placeholder="姓名"/>
+              <input type="text" name="xid"  placeholder="标本号"/>
+              <select name="date">
+                <option value ="all">全部时间</option>
+                <option value ="3">近3天</option>
+                <option value ="7">近7天</option>
+                <option value ="30">近1月</option>
+              </select>
+              <select name="status">
+                <option value ="">报告状态</option>
+                <option value ="0">未录入</option>
+                <option value ="1">录入中</option>
+                <option value ="2">已录入</option>
+              </select>
+              <button type="submit">搜索</button> 
+            </div>
+            <div class="qing"></div>
+          </div>
+        </form>
+        <form>
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td>序号</td>
+                <td>姓名</td>
+                <td>标本号</td>
+                <td>检测项目</td>
+                <td>项目编号</td>
+                <td>检测进度</td>
+                <td>报告</td>
+                <td>报告状态</td>
+              </tr>
+           <foreach name="list" item="vo">
+              <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.uname}</td>
+                <td>{$vo.xid}</td>
+                <td>
+                    <php>
+                        $vo['project'] = unserialize($vo['project']);
+                        //dump($vo['project']);
+                    </php>
+                    <foreach name="vo['project']" item="vo2">
+                        {$vo2}、
+                    </foreach>
+                </td>
+                <td>{$vo.mid}</td>
+                <td>{:get_status($vo['status'])}</td>
+                <td><a href="{:url('xmgl/edit',array('id'=>$vo['id']))}">编辑</a></td>
+                <td>未录入</td>
+              </tr>
+           </foreach>
+            </table>
+            <div class="xxmt_tab_inputs">
+
+            </div>
+          </div>
+        </form>
+        <div class="fenye"> {$page} </div>
+      </div>
+</body>
+</html>

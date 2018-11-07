@@ -1,0 +1,79 @@
+<include file="public@header" />
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+</head>
+<body>
+<div class="xxmt_right_nr_x">
+    <form>
+        <div class="xxmt_add-search">
+            <div class="xxmt_add">
+                <a href="{:url('user/add')}">{:lang('ADMIN_USER_ADD')}</a>
+            </div>
+            <div class="xxmt_search">
+                <form method="post" action="{:url('User/index')}">
+                    用户名:
+                    <input type="text" class="form-control" name="user_login"  value="{:input('request.user_login/s','')}" placeholder="请输入{:lang('USERNAME')}">
+                    邮箱:
+                    <input type="text" class="form-control" name="user_email"  value="{:input('request.user_email/s','')}" placeholder="请输入{:lang('EMAIL')}">
+                    <button type="submit">搜索</button>
+                </form>
+            </div>
+            <div class="qing"></div>
+        </div>
+    </form>
+    <form>
+        <div class="xxmt_tables">
+            <table border="1">
+                <tr>
+                    <th width="50">ID</th>
+                    <th>{:lang('USERNAME')}</th>
+                    <th>{:lang('LAST_LOGIN_IP')}</th>
+                    <th>{:lang('LAST_LOGIN_TIME')}</th>
+                    <th>{:lang('EMAIL')}</th>
+                    <th>{:lang('STATUS')}</th>
+                    <th width="130">{:lang('ACTIONS')}</th>
+                </tr>
+                <php>$user_statuses=array("0"=>lang('USER_STATUS_BLOCKED'),"1"=>lang('USER_STATUS_ACTIVATED'),"2"=>lang('USER_STATUS_UNVERIFIED'));</php>
+                <foreach name="users" item="vo">
+                    <tr>
+                        <td>{$vo.id}</td>
+                        <td>{$vo.user_login}</td>
+                        <td>{$vo.last_login_ip}</td>
+                        <td>
+                            <if condition="$vo['last_login_time'] eq 0">
+                                {:lang('USER_HAVE_NOT_LOGIN')}
+                                <else />
+                                {:date('Y-m-d H:i:s',$vo['last_login_time'])}
+                            </if>
+                        </td>
+                        <td>{$vo.user_email}</td>
+                        <td>{$user_statuses[$vo['user_status']]}</td>
+                        <td>
+                            <if condition="$vo['id'] eq 1 || $vo['id'] eq cmf_get_current_admin_id()">
+                                <font color="#cccccc">{:lang('EDIT')}</font>  <font color="#cccccc">{:lang('DELETE')}</font>
+                                <if condition="$vo['user_status'] eq 1">
+                                    <font color="#cccccc">{:lang('BLOCK_USER')}</font>
+                                    <else />
+                                    <font color="#cccccc">{:lang('ACTIVATE_USER')}</font>
+                                </if>
+                                <else />
+                                <a href='{:url("user/edit",array("id"=>$vo["id"]))}'>{:lang('EDIT')}</a>
+                                <a class="js-ajax-delete" href="{:url('user/delete',array('id'=>$vo['id']))}">{:lang('DELETE')}</a>
+                                <if condition="$vo['user_status'] eq 1">
+                                    <a href="{:url('user/ban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:lang('BLOCK_USER_CONFIRM_MESSAGE')}">{:lang('BLOCK_USER')}</a>
+                                    <else />
+                                    <a href="{:url('user/cancelban',array('id'=>$vo['id']))}" class="js-ajax-dialog-btn" data-msg="{:lang('ACTIVATE_USER_CONFIRM_MESSAGE')}">{:lang('ACTIVATE_USER')}</a>
+                                </if>
+                            </if>
+                        </td>
+                    </tr>
+                </foreach>
+
+            </table>
+
+        </div>
+    </form>
+    <div class="pagination">{$page}</div>
+</div>
+	<script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>系统管理-数据备份/恢复</title>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+      <div class="xxmt_right_nr_x">
+          <form name="backupform" action="{:url('admin/backup/backups')}" method="post" class="js-ajax-form">
+              <div class="xxmt_tables">
+                  <table border="1">
+                      <tr>
+                          <td colspan="5">数据备份：</td>
+                      </tr>
+                      <tr>
+                          <td>备份文件地址：</td>
+                          <td colspan="4">
+                              <input type="text" name="dirname" value="/data/backup/"/>&nbsp;&nbsp;
+                              <input type="submit" class="js-ajax-submit" value=" 备份整个数据库 "/> &nbsp;
+                          </td>
+                      </tr>
+                      <tr>
+                          <td>备份说明：</td>
+                          <td colspan="4">*备份数据存放目录默认为data/backup,需要有写入权限，不建议修改其他位置</td>
+                      </tr>
+                  </table>
+              </div>
+          </form>
+        <div class="xxmt_tables">
+        <table border="1">
+            <tr>
+                <td colspan="5">数据表列表：</td>
+            </tr>
+            <tr>
+                <td>序号</td>
+                <td>表名</td>
+                <td>记录数</td>
+                <td>操作</td>
+            </tr>
+            <volist name="dblist" id="vo">
+              <tr>
+                  <td>{$key+1}</td>
+                  <td>{$vo.name}</td>
+                  <td>{$vo.rows}</td>
+                  <td>
+                      <a href="{:url('admin/backup/backtable',array('tablename'=>$vo['name']))}">备份</a>
+                  </td>
+              </tr>
+            </volist>
+            </table>
+              </div>
+         </form>
+            <div class="xxmt_tab_inputs"></div>
+          </div>
+        </form>
+        
+      </div>
+</body>
+</html>

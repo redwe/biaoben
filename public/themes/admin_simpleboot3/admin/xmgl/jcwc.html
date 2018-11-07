@@ -1,0 +1,101 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>项目管理-待检列表</title>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+<script type="text/javascript"src="__TMPL__/public/assets/js/jquery.min.js"></script>
+<script type="text/javascript">
+		//checkbox 全选/取消全选
+		var isCheckAll = false;
+		function swapCheck() {
+			if (isCheckAll) {
+				$("input[type='checkbox']").each(function() {
+					this.checked = false;
+				});
+				isCheckAll = false;
+			} else {
+				$("input[type='checkbox']").each(function() {
+					this.checked = true;
+				});
+				isCheckAll = true;
+			}
+		}
+	</script>
+</head>
+
+<body>
+  <div class="xxmt_right_nr_x">
+      <form name="seach" method="post" action="#">
+          <div class="xxmt_add-search">
+            <div class="xxmt_add">
+                <php>
+                    $plist = $coms['price'];
+                    if($plist){
+                    $parray = explode(",",$plist);
+                    }
+                </php>
+            </div>
+            <div class="xxmt_search">
+                <select name="pid">
+                    <option value ="">检测项目</option>
+                    <volist name="pros" id="vo2">
+                        <option value ="{$vo2.pname}">{$vo2.pname}</option>
+                    </volist>
+                </select>
+                <select name="com">
+                    <option value ="">{$coms.pname}</option>
+                    <foreach name="parray" item="vo">
+                        <option value ="{$vo}">{$vo}</option>
+                    </foreach>
+                </select>
+              <button type="submit">搜索</button> 
+            </div>
+            <div class="qing"></div>
+          </div>
+        </form>
+        <form>
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td><input type="checkbox" value="" onclick="swapCheck()"/></td>
+                <td>序号</td>
+                <td>姓名</td>
+                <td>标本号</td>
+                <td>检测项目</td>
+                <td>登记时间</td>
+                <td>送检单位</td>
+                <td>选择实验室</td>
+                <td>状态</td>
+              </tr>
+                <foreach name="list" item="vo">
+              <tr>
+                <td><input type="checkbox" name="checkid[]" value="{$vo.id}"/></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.uname}</td>
+                <td>{$vo.xid}</td>
+                <td>
+                    <php>
+                        $vo['project'] = unserialize($vo['project']);
+                        //dump($vo['project']);
+                    </php>
+                    <foreach name="vo['project']" item="vo2">
+                        {$vo2}、
+                    </foreach>
+                </td>
+                  <td>{$vo.create}</td>
+                  <td>{$vo.com}</td>
+                  <td>{$vo.labs}</td>
+                  <td>{:get_status($vo['status'])}</td>
+              </tr>
+                </foreach>
+            </table>
+            <div class="xxmt_tab_inputs">
+              <input type="submit" value="检测完成"/>
+            </div>
+          </div>
+        </form>
+        <div class="fenye"> {$page} </div>
+      </div>
+</body>
+</html>

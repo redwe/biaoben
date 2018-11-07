@@ -1,0 +1,138 @@
+@charset "utf-8";
+/* CSS Document */
+* { margin: 0;  padding: 0;}
+body { color:#000; font: normal 100% "微软雅黑";  background:#fff;  background-attachment:fixed 
+ word-wrap:break-word; font-size:16px;}
+a{  text-decoration:none; color:#333;}
+a:hover {text-decoration:none;}
+a img {border: none;}
+ul,li,dl,dt,dd,form,img,p{ margin:0;  padding:0;  border:none;  list-style:none;}
+img {
+ image-rendering: optimizeQuality;  /* 图像不失真 Firefox 3.6+; default behavior is identical, no need to specify */
+ -ms-interpolation-mode: bicubic;   /* 图像不失真 IE专有属性 Internet Explorer 7.0; default in IE8+ */
+ vertical-align:bottom;
+}
+table{border-collapse: collapse;}
+.qing { clear:both; height:0px; width:100%; font-size:1px; line-height:0px; visibility:hidden; 
+overflow:hidden; }
+
+
+.login_bg{ width:100vw; height:100vh; position:fixed; top:0; left:0; z-index:-1;}
+.login_bg img{ display:block; width:100%; height:auto;}
+.login_cent{ width:100vw; height:100vh; text-align:center; display:table;}
+.login_cent .login_nr{display:table-cell;vertical-align:middle;}
+.login_cent .login_nr .login_x{ width:100%; height:auto; padding:3rem 0; background:rgba(255,255,255,.9);}
+.login_x h2{ font-size:36px; color:#1c4b96;}
+.login_table{ width:100%; max-width:1200px; margin:2rem auto; display:flex; text-align:center;}
+.login_l{ width:45%; text-align:right; margin-right:10%;}
+.login_l img{ display:block; width:auto; right:0; float:right;}
+.login_r{ width:45%; text-align:left;}
+.login_r form p{ margin-bottom:2rem; line-height:2rem;}
+.login_r form p span{display:block; width:3rem; float:left; font-size:1rem; line-height:2.5rem; margin-right:1rem; }
+.login_r form input{ line-height:2rem; width:50%; }
+.login_r form button{ width:8rem; margin-left:4rem; border:none; line-height:2rem; background:#1c4b96; color:#fff; }
+/*login(登录)   end*/
+
+
+.xxmt{ display:block; width:100vw;height:100vh; display:flex;overflow:auto; }
+.xxmt_left{ width:18.75%; max-width:360px; height:110vh; background:#1d4d98; }
+.xxmt_right{ width:81.25%; height:90vh; max-width:1560px;}
+/*lodo*/
+.xxmt_logo{ width:100%; height:8rem; line-height:8rem; border-bottom:1px solid #fff;display:table;}
+.xxmt_logo div{display:table-cell;vertical-align:middle;}
+.xxmt_logo div img{ display:block; margin:0 auto; width:auto; max-width:80%;}
+/*lodo  end*/
+
+/*左-导航*/
+.xxmt_left_sidebar{ width:100%;}
+.xxmt_left_sidebar ul li{ width:100%; border-bottom:1px  solid #bfbfbf; height:4rem;}
+.xxmt_left_sidebar ul .xxmt_sidebar_sele a{ background:rgba(255,255,255,.2);}
+.xxmt_left_sidebar ul li a{ display:block; width:80%; padding:0 10%;height:4rem; background:#1d4d98; line-height:4rem; color:#fff; display:flex; }
+.xxmt_left_sidebar ul li a:hover{ background:rgba(255,255,255,.2);}
+.xxmt_left_sidebar ul li a div{ width:20%; height:4rem;}
+.xxmt_left_sidebar ul li a img{ display:block; width:1.5rem; height:1.5rem; margin-top:1.25rem;}
+.xxmt_left_sidebar ul li a p{ width:70%; font-size:1rem;}
+.xxmt_left_sidebar ul li a span{ display:block; width:10%; text-align:right;}
+/*左-导航  end*/
+
+/*右-导航*/
+.xxmt_right_top{ width:100%; height:8rem; border-bottom:1px solid #bfbfbf; }
+.xxmt_right_topx{ width:100%; height:5rem; border-bottom:1px solid #dcdcdc; background:#eee; display:flex;}
+.xxmt_right_nav{ width:70%; float:left;  }
+.xxmt_right_nav ul li{ float:left; width:4rem; margin:0 2rem; line-height:5rem;}
+.xxmt_right_nav ul li a{ display:block; width:100%; height:100%;}
+.xxmt_right_nav ul li a:hover, .top_active{ color:#1d4d98; border-bottom:2px solid #1d4d98;}
+/*右-导航  end*/
+
+/*账号 退登*/
+.xxmt_right_account{ width:360px; float:right; text-align:right; line-height:5rem;}
+/*账号 退登 end*/
+
+/*面包屑导航*/
+.xxmt_breadcrumb{ width:95%; margin:0 auto; height:3rem; line-height:3rem; color:#444; font-size:.875rem;}
+.xxmt_breadcrumb a{ color:#444;}
+/*面包屑导航  end*/
+
+
+.xxmt_right_nr{ position:relative; height:85%;}
+.xxmt_right_nr_x{position:absolute;
+    left:0;
+    top:0;
+    right:0;
+    bottom:0; overflow-y:auto;overflow-x:hidden; padding-bottom:3rem;}
+/*添加  删除  搜索*/
+.xxmt_add-search{ width:95%; margin:0 auto; margin-top:1.5rem;}
+.xxmt_add{ float:left; }
+.xxmt_search{ float:right;}
+.xxmt_add input{ width:auto; margin-right:1rem; padding:0 1.5rem; line-height:2rem; border:none; background:#1d4d98; color:#fff;}
+.xxmt_search input{ width:10rem; line-height:2rem; margin-right:1rem; text-indent:1rem;}
+.xxmt_search select{ width:10rem; height:2.1rem; line-height:2.1rem; margin-right:1rem; text-indent:1rem; font-size:.875rem; color:#666; }
+.xxmt_search button{ width:auto; padding:0 1.5rem; line-height:2rem; border:none; background:#1d4d98; color:#fff;}
+
+.xxmt_add a{ display: block; width:auto; margin-right:1rem; padding:0 1.5rem; line-height:2rem; border:none; background:#1d4d98; color:#fff;}
+/*添加  删除  搜索  end*/
+
+/*表格*/
+.xxmt_tables{ width:95%; margin:0 auto; margin-top:1.5rem;}
+.xxmt_tables table{ width:100%;}
+.xxmt_tables table tr{ background:#cce0ff; text-align:center; font-size:.875rem ;line-height:2.25rem;}
+.xxmt_tables table tr a{ color:#1d4d98;}
+.xxmt_tables table tr td ul li{ float: left; width:25%; line-height:2.25rem;}
+.xxmt_tables table tr:first-child{ background:#1d4d98; color:#fff; font-size:1rem;}
+.xxmt_tables table tr:nth-child(2n){ background:#fff; color:#333; }
+.xxmt_tab_inputs input{ margin-top:1.5rem; width:auto;margin-right: 1rem;padding: 0 1.5rem;line-height: 2rem;border: none; background: #1d4d98; color: #fff;}
+
+.xxmt_tab_inputs button{ width:auto; margin-right:1rem; padding:0 1.5rem; margin-top: 10px; line-height:2rem; border:none; background:#1d4d98; color:#fff;}
+
+.xxmt_tables table tr td select{ font-size:.875rem; line-height:1.25rem; background:rgba(255,255,255,0); width:auto;}
+.xxmt_tables table tr td input{ font-size:.875rem; line-height:1.25rem;}
+.xxmt_tables table tr textarea{ width:76%; height:3rem; padding:.2rem .5rem; line-height:1.5rem; font-size:.875rem; margin-top:.875rem;}
+.xxmt_tables table .bgc_l td{ background:#1d4d98; color:#fff;}
+
+/*表格  end*/
+
+
+
+
+
+
+
+
+/*分页*/
+.fenye{ width:90%; margin:0 auto; margin-top:3rem; text-align:center;}
+.fenye>a{ font-size:.875rem; padding:.5rem .875rem; padding-left:.95rem; margin:0 .5rem; line-height:1.875rem; border:1px solid #ccc; text-align:center;}
+.fenye>b{ font-size:.875rem; padding:.5rem .875rem; margin:0 .5rem; background:#1d4d98; color:#fff; border:1px solid #1d4d98; }
+/*分页  end*/
+
+
+
+
+
+
+
+
+
+
+
+
+

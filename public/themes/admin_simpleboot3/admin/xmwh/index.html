@@ -1,0 +1,50 @@
+<include file="public@header"/>
+<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+    <div class="xxmt_right_nr_x">
+        <form>
+          <div class="xxmt_add-search">
+            <div class="xxmt_add">
+                <a class="xxmt_a" href="{:url('/admin/xmwh/add')}">增加信息</a>
+            </div>
+            <div class="xxmt_search">
+              
+            </div>
+            <div class="qing"></div>
+          </div>
+        </form>
+        <form>
+          <div class="xxmt_tables">
+            <table border="1">
+              <tr>
+                <td rowspan="2">序号</td>
+                <td colspan="2">检测项目名称</td>
+                <td rowspan="2">检测技术平台</td>
+                <td rowspan="2">报告模板</td>
+                <td rowspan="2">设置</td>
+              </tr>
+              <tr class="bgc_l">
+                <td>项目名称</td>
+                <td>项目价格</td>
+              </tr>
+                <volist name="list" id="vo">
+              <tr>
+                <td>{$vo.id}</td>
+                <td>{$vo.pname}</td>
+                <td>{$vo.price}元</td>
+                <td>{$vo.platform}</td>
+                <td>{$vo.template}</td>
+                <td><a href="{:url('/admin/xmwh/edit',array('id'=>$vo['id']))}">修改</a>  /  <a class="js-ajax-delete" href="{:url('/admin/xmwh/del',array('id'=>$vo['id']))}">删除</a></td>
+              </tr>
+                </volist>
+            </table>
+            
+          </div>
+        </form>
+        
+      </div>
+    <script src="__STATIC__/js/admin.js"></script>
+</body>
+</html>
