@@ -62,10 +62,18 @@ class BbjsController extends AdminBaseController
     {
         if ($this->request->isPost()) {
             $_POST['create'] = date("Y-m-d H:i:s",time());
-            $_POST['mid'] = serialize($_POST['mid']);
-            $_POST['pid'] = serialize($_POST['pid']);
-            $_POST['pname'] = serialize($_POST['pname']);
-            $_POST['project'] = serialize($_POST['project']);           //serialize序列化，反序列化unserialize
+            $mids = $_POST['mid'];
+            $pids = $_POST['pid'];
+            $pname = $_POST['pname'];
+            $project = $_POST['project'];
+            $marray1 = [];
+            $marray2 = [];
+            for($i = 0;$i<count($pids);$i++){
+                $marray1[$pids[$i]] = $mids[$i];
+                $marray2[$pname[$i]] = $project[$i];
+            }
+            //$_POST['pname'] = json($_POST['pname']);
+            //$_POST['project'] = json($_POST['project']);           //serialize序列化，反序列化unserialize
             $_POST['isdel'] = 0;
             $_POST['status'] = '';
             $result = $this->validate($this->request->param(), 'Bbjs');
@@ -99,22 +107,15 @@ class BbjsController extends AdminBaseController
                     ];
                     $bid    = DB::name('Bbjs')->insertGetId($data0);
                     if($bid){
-                        $data = [
-                            "bid"=>$bid,
-                            "mid"=>$_POST['mid']
-                        ];
+                        $data = ["bid"=>$bid];
                         DB::name('baogao')->insertGetId($data);
-
                         $data2 = [
                             "bid"=>$bid,
                             "xid"=>$_POST['xid'],
-                            "mid"=>$_POST['mid'],
-                            "pid"=>$_POST['pid'],
-                            "pname"=>$_POST['pname'],
-                            "project"=>$_POST['project']
+                            "mid"=>json_encode($marray1,JSON_UNESCAPED_UNICODE),
+                            "project"=>json_encode($marray2,JSON_UNESCAPED_UNICODE)
                         ];
                         DB::name('project')->insertGetId($data2);
-
                         $this->success("添加成功！", url("bbjs/index"));
                     }
                 }
@@ -127,6 +128,11 @@ class BbjsController extends AdminBaseController
     {
         $where['isdel']   = 0;
         $request = input('request.');
+
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
+
         if (!empty($request['uname'])) {
             $where['b.uname'] = $request['uname'];
         }
@@ -205,7 +211,7 @@ class BbjsController extends AdminBaseController
         $join=[
             ["project p","b.xid = p.xid"]
         ];
-        $field = "b.*,p.project,p.mid,p.pid";
+        $field = "b.*,p.project,p.mid";
 
         $id    = $this->request->param('id', 0, 'intval');
         $member = DB::name('bbjs')
@@ -223,7 +229,6 @@ class BbjsController extends AdminBaseController
         if ($this->request->isPost()) {
             $id = $this->request->param('id', 0, 'intval');
             $_POST['create'] = date("Y-m-d H:i:s",time());
-            $_POST['project'] = serialize($_POST['project']);           //serialize序列化，反序列化unserialize
             $_POST['isdel'] = 0;
             $_POST['status'] = '';
             $result = $this->validate($this->request->param(), 'Bbjs');
@@ -231,7 +236,41 @@ class BbjsController extends AdminBaseController
             if ($result !== true) {
                 $this->error($result);
             } else {
-                $result    = DB::name('Bbjs')->update($_POST);
+                $where["id"]=$id;
+                $data0 = [
+                    "xid"=>$_POST['xid'],
+                    "uname"=>$_POST['uname'],
+                    "sex"=>$_POST['sex'],
+                    "age"=>$_POST['age'],
+                    "mobile"=>$_POST['mobile'],
+                    "com"=>$_POST['com'],
+                    "linc"=>$_POST['linc'],
+                    "mark"=>$_POST['mark'],
+                    "code"=>$_POST['code'],
+                    "block"=>$_POST['block'],
+                    "btype"=>$_POST['btype'],
+                    "isdel"=>0,
+                    "status"=>0,
+                    "create"=>date("Y-m-d h:i:s")
+                ];
+                $result    = DB::name('Bbjs')->where($where)->update($data0);
+                $mids = $_POST['mid'];
+                $pids = $_POST['pid'];
+                $pname = $_POST['pname'];
+                $project = $_POST['project'];
+                $marray1 = [];
+                $marray2 = [];
+                for($i = 0;$i<count($pids);$i++){
+                    $marray1[$pids[$i]] = $mids[$i];
+                    $marray2[$pname[$i]] = $project[$i];
+                }
+                $data2 = [
+                    "xid"=>$_POST['xid'],
+                    "mid"=>json_encode($marray1,JSON_UNESCAPED_UNICODE),
+                    "project"=>json_encode($marray2,JSON_UNESCAPED_UNICODE)
+                ];
+                $where1["bid"]=$id;
+                DB::name('project')->where($where1)->update($data2);
                 $this->success("编辑成功！", url("bbjs/bbgl"));
             }
         }
@@ -355,6 +394,9 @@ class BbjsController extends AdminBaseController
         $where['b.isdel']   = 0;
         $where['b.status']  = 0;
         $request = input('request.');
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
         if (!empty($request['com'])) {
             $where['b.com'] = $request['com'];
         }
@@ -383,6 +425,9 @@ class BbjsController extends AdminBaseController
         $where['b.isdel']   = 0;
         $where['b.position']   = '运营中心';
         $request = input('request.');
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
         if (!empty($request['com'])) {
             $where['b.com'] = $request['com'];
         }
@@ -475,6 +520,9 @@ class BbjsController extends AdminBaseController
         $where['b.isdel']   = 0;
         $where['b.position']   = array('not in','客户处,运营中心');
         //$where['position']   = array('neq','客户处');
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
         $request = input('request.');
         if (!empty($request['com'])) {
             $where['b.com'] = $request['com'];
@@ -533,6 +581,9 @@ class BbjsController extends AdminBaseController
         $where['b.isdel']   = 0;
         $where['b.position']   = '运营中心';
         //$where['position']   = array('neq','客户处');
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
         $request = input('request.');
         if (!empty($request['com'])) {
             $where['b.com'] = $request['com'];
@@ -590,6 +641,9 @@ class BbjsController extends AdminBaseController
 	public function bbwz()
     {
         $where['isdel']   = 0;
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
         if (!empty($request['uname'])) {
             $where['b.uname'] = $request['uname'];
         }

@@ -32,20 +32,20 @@
             
             </div>
             <div class="xxmt_search">
-              <input type="text" placeholder="姓名"/>
-              <input type="text" placeholder="标本号"/>
-              <select>
-                <option value ="全部时间">全部时间</option>
-                <option value ="近3天">近3天</option>
-                <option value ="近7天">近7天</option>
-                <option value ="近1月">近1月</option>
-              </select>
-              <select>
-                <option value ="报告状态">报告状态</option>
-                <option value ="未录入">未录入</option>
-                <option value ="未录入">录入中</option>
-                <option value ="未录入">已录入</option>
-              </select>
+                <input type="text" name="uname"  placeholder="姓名"/>
+                <input type="text" name="xid"  placeholder="标本号"/>
+                <select name="date">
+                    <option value ="all">全部时间</option>
+                    <option value ="3">近3天</option>
+                    <option value ="7">近7天</option>
+                    <option value ="30">近1月</option>
+                </select>
+                <select name="status">
+                    <option value ="">报告状态</option>
+                    <option value ="0">未录入</option>
+                    <option value ="1">录入中</option>
+                    <option value ="2">已录入</option>
+                </select>
               <button type="submit">搜索</button> 
             </div>
             <div class="qing"></div>
@@ -65,101 +65,37 @@
                 <td>报告</td>
                 <td>报告状态</td>
               </tr>
+                <foreach name="list" item="vo">
+                    <php>
+                        $mid = json_decode($vo['mid'],true);
+                    </php>
               <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已完成</td>
-                <td><a href="#">编辑</a></td>
+                <td><input type="checkbox" name="checkid[]" value="{$vo.id}"/></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.uname}</td>
+                <td>{$vo.xid}</td>
+                <td> <php>
+                    $vo['project'] = json_decode($vo['project'],true);
+                    //dump($vo['project']);
+                </php>
+                    <foreach name="vo['project']" item="vo2">
+                        {$vo2}、
+                    </foreach></td>
+                <td><foreach name="mid" item="vo3">
+                    {$vo3}、
+                </foreach></td>
+                <td>{:get_status($vo['status'])}</td>
+                <td><a href="{:url('jcbg/edit',array('id'=>$vo['id']))}">编辑</a></td>
                 <td>已录入</td>
               </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已完成</td>
-                <td><a href="#">编辑</a></td>
-                <td>已录入</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已完成</td>
-                <td><a href="#">编辑</a></td>
-                <td>已录入</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已完成</td>
-                <td><a href="#">编辑</a></td>
-                <td>已录入</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已完成</td>
-                <td><a href="#">编辑</a></td>
-                <td>已录入</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已完成</td>
-                <td><a href="#">编辑</a></td>
-                <td>已录入</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已完成</td>
-                <td><a href="#">编辑</a></td>
-                <td>已录入</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已完成</td>
-                <td><a href="#">编辑</a></td>
-                <td>已录入</td>
-              </tr>
+                </foreach>
             </table>
             <div class="xxmt_tab_inputs">
               <input type="submit" value="审核"/>
             </div>
           </div>
         </form>
-        <div class="fenye"> <a href="#"> << </a> <a href="#"> < </a> <b>1</b> <a href="#"> 2 </a> <a href="#"> 3 </a> <a href="#"> > </a> <a href="#"> >> </a> </div>
+        <div class="fenye"> {$page} </div>
       </div>
 </body>
 </html>

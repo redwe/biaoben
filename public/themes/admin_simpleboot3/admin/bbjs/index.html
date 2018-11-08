@@ -80,7 +80,7 @@
                    <volist name="parray3" id="vo2">
                        <option value ="{$vo2}">{$vo2}</option>
                    </volist>
-              </select>&nbsp;&nbsp;<input name="mid" value="{$vo1.pcode}"> （项目号自动编号）  &nbsp;&nbsp;
+              </select>&nbsp;&nbsp;<input name="mid[]" value="{$vo1.pcode}"> （项目号自动编号）  &nbsp;&nbsp;
                     <a onclick="$(this).parent().remove();">删除</a></td>
               </tr>
               </foreach>

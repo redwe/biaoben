@@ -66,9 +66,10 @@
                 </td>
               </tr>
                 <php>
-                    $mids = unserialize($mid);      //检测项目ID
-                    $pids = unserialize($pid);      //检测项目名称
-                    $projects = unserialize($project);      //检测项目名称
+                    $mids = json_decode($mid,true);      //检测项目ID
+                    $pids = array_keys($mids);      //检测项目ID
+                    $projects = json_decode($project,true);      //检测项目名称
+                    $pnames = array_keys($projects);
                 </php>
                 <foreach name="pros" item="vo1">
                     <php>
@@ -89,7 +90,7 @@
                            <option <php>if(in_array($vo2,$projects)){</php>selected <php>}</php> value ="{$vo2}">{$vo2}</option>
                        </volist>
                    </select>
-              </select>&nbsp;&nbsp;<input name="mid" value="{$vo1.pcode}"> （项目号自动编号）  &nbsp;&nbsp;
+              </select>&nbsp;&nbsp;<input name="mid[]" value="{$vo1.pcode}"> （项目号自动编号）  &nbsp;&nbsp;
                     <a onclick="$(this).parent().remove();">删除</a></td>
               </tr>
                     <php>}</php>

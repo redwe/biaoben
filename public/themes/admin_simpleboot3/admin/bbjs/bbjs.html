@@ -28,14 +28,20 @@
       <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="">
           <div class="xxmt_add-search">
             <div class="xxmt_add">
+                <php>
+                    $plist = $coms['price'];
+                    if($plist){
+                    $parray = explode(",",$plist);
+                    }
+                </php>
             </div>
             <div class="xxmt_search">
-              <select name="com">
-                <option value ="送检单位">送检单位</option>
-                <option value ="单位a">单位a</option>
-                <option value ="单位b">单位b</option>
-                <option value ="单位c">单位c</option>
-              </select>
+                <select name="com">
+                    <option value ="">{$coms.pname}</option>
+                    <foreach name="parray" item="vo">
+                        <option value ="{$vo}">{$vo}</option>
+                    </foreach>
+                </select>
               <button type="submit">搜索</button>
             </div>
             <div class="qing"></div>
@@ -61,7 +67,7 @@
                 <td>{$vo.code}</td>
                 <td>
                     <php>
-                        $vo['project'] = unserialize($vo['project']);
+                        $vo['project'] = json_decode($vo['project'],true);
                         //dump($vo['project']);
                     </php>
                     <foreach name="vo['project']" item="vo2">

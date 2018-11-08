@@ -120,8 +120,9 @@ overflow:hidden; }
 
 /*分页*/
 .fenye{ width:90%; margin:0 auto; margin-top:3rem; text-align:center;}
-.fenye>a{ font-size:.875rem; padding:.5rem .875rem; padding-left:.95rem; margin:0 .5rem; line-height:1.875rem; border:1px solid #ccc; text-align:center;}
-.fenye>b{ font-size:.875rem; padding:.5rem .875rem; margin:0 .5rem; background:#1d4d98; color:#fff; border:1px solid #1d4d98; }
+.fenye li{ display: inline-block;}
+.fenye li>a{ font-size:.875rem; padding:.5rem .875rem; padding-left:.95rem; margin:0 .5rem; line-height:1.875rem; border:1px solid #ccc; text-align:center;}
+.fenye li>b{ font-size:.875rem; padding:.5rem .875rem; margin:0 .5rem; background:#1d4d98; color:#fff; border:1px solid #1d4d98; }
 /*分页  end*/
 
 

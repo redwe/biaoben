@@ -48,22 +48,29 @@
                 <td>报告状态</td>
               </tr>
            <foreach name="list" item="vo">
+               <php>
+                   $mid = json_decode($vo['mid'],true);
+               </php>
               <tr>
                 <td>{$vo.id}</td>
                 <td>{$vo.uname}</td>
                 <td>{$vo.xid}</td>
                 <td>
                     <php>
-                        $vo['project'] = unserialize($vo['project']);
+                        $vo['project'] = json_decode($vo['project'],true);
                         //dump($vo['project']);
                     </php>
                     <foreach name="vo['project']" item="vo2">
                         {$vo2}、
                     </foreach>
                 </td>
-                <td>{:unserialize($vo['mid'])}</td>
+                <td>
+                    <foreach name="mid" item="vo3">
+                        {$vo3}、
+                    </foreach>
+                </td>
                 <td>{:get_status($vo['status'])}</td>
-                <td><a href="{:url('xmgl/edit',array('id'=>$vo['id']))}">编辑</a></td>
+                <td><a href="{:url('jcbg/edit',array('id'=>$vo['id']))}">编辑</a></td>
                 <td>未录入</td>
               </tr>
            </foreach>

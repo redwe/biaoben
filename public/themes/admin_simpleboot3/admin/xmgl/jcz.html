@@ -76,7 +76,7 @@
                 <td>{$vo.xid}</td>
                 <td>
                     <php>
-                        $vo['project'] = unserialize($vo['project']);
+                        $vo['project'] = json_decode($vo['project'],true);
                         //dump($vo['project']);
                     </php>
                     <foreach name="vo['project']" item="vo2">

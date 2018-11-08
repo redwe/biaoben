@@ -1,68 +1,113 @@
 <!doctype html>
 <html>
 <head>
-<meta charset="utf-8">
-<title>检测报告-报告录入</title>
-<link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+    <meta charset="utf-8">
+    <title>标本寄送-手工登记</title>
+    <link href="__TMPL__/public/assets/css/b_css.css" rel="stylesheet" type="text/css">
+    <script type="text/javascript"src="__TMPL__/public/assets/js/jquery.min.js"></script>
 </head>
-
 <body>
-  <div class="xxmt_right_nr_x">
-        <form>
-          <div class="xxmt_add-search">
-            <div class="xxmt_add">
-            
-            </div>
-            <div class="xxmt_search">
-              
-            </div>
-            <div class="qing"></div>
-          </div>
-        </form>
-        <form>
-          <div class="xxmt_tables">
+<div class="xxmt_right_nr_x">
+    <php>
+        $plist = $coms['price'];
+        if($plist){
+        $parray = explode(",",$plist);
+        }
+        $plist2 = $ptype['price'];
+        if($plist2){
+        $parray2 = explode(",",$plist2);
+        }
+    </php>
+    <form method="post" class="form-horizontal js-ajax-form margin-top-20" action="{:url('bbjs/editpost')}">
+        <div class="xxmt_tables">
             <table border="1">
-              <tr>
-                <td colspan="3">分子病理检测报告</td>
-              </tr>
-              <tr>
-                <td>姓名：张三</td>
-                <td>性别：男</td>
-                
-              </tr>
-              <tr>
-                <td>年龄：39</td>
-                <td>手机：12345678912</td>
-              </tr>
-              <tr>
-                <td>送检单位：公司a</td>
-                <td>标本编号：X201800002   </td>
-              </tr>
-              <tr>
-                <td>项目编号：M2018-00003</td>
-                <td>标本质控：合格</td>
-              </tr>
-              <tr>
-                <td>检测项目： PD-L1（263）</td>
-                <td>检测方法：免疫组化</td>
-              </tr>
-              <tr>
-                <td colspan="3">&nbsp;</td>
-              </tr>
-              <tr>
-                <td colspan="3">检测结果：<input type="text" value=""/></td>
-              </tr>
-              <tr>
-                <td colspan="3">上传检测图片：<input type="file" /></td>
-              </tr>
+                <tr>
+                    <td colspan="3">编辑信息</td>
+                </tr>
+                <tr>
+                    <td>姓名*：<input type="text" name="uname" value="{$uname}"/></td>
+                    <td>性别*：<input type="radio" <php>if($sex==1){</php>checked <php>}</php> name="sex" value="1"/> 男
+                        <input type="radio" <php>if($sex==0){</php>checked <php>}</php> name="sex" value="0"/> 女</td>
+                    <td>年龄：<input type="text" name="age" value="{$age}"/></td>
+                </tr>
+                <tr>
+                    <td>手机*：<input type="text" name="mobile" value="{$mobile}"/></td>
+                    <td>送检单位：
+                        <select name="com">
+                            <option value ="">{$coms.pname}</option>
+                            <foreach name="parray" item="vo">
+                                <option <php>if($com==$vo){</php>selected <php>}</php> value ="{$vo}">{$vo}</option>
+                            </foreach>
+                        </select>
+                        <a href="{:url('/admin/bbjs/addcom',array('adddo'=>'com'))}">设置</a>
+                    </td>
+                    <td>临床考虑：<input type="text" name="linc" value="{$linc}"/></td>
+                </tr>
+                <tr>
+                    <td colspan="3">备注*：<textarea name="mark">{$mark}</textarea></td>
+                </tr>
+                <tr>
+                    <td colspan="3">&nbsp; </td>
+                </tr>
+                <tr>
+                    <td colspan="3">标本1：<input name="xid" value="{$xid}">（标本号自动编号）</td>
+                </tr>
+                <tr>
+                    <td>原实验室编号 ：<input type="text" name="code" value="{$code}"/></td>
+                    <td>原蜡块号 ：<input type="text" name="block" value="{$block}"/></td>
+                    <td>标本类型* ：
+                        <select name="btype">
+                            <option value ="">{$ptype.pname}</option>
+                            <foreach name="parray2" item="vo">
+                                <option <php>if($btype==$vo){</php>selected <php>}</php> value ="{$vo}">{$vo}</option>
+                            </foreach>
+                        </select>
+                        <a href="{:url('/admin/bbjs/addcom',array('adddo'=>'type'))}">设置</a>
+                    </td>
+                </tr>
+                <php>
+                    $mids = json_decode($mid,true);      //检测项目ID
+                    $pids = array_keys($mids);      //检测项目ID
+                    $projects = json_decode($project,true);      //检测项目名称
+                    $pnames = array_keys($projects);
+                </php>
+                <foreach name="pros" item="vo1">
+                    <php>
+                        $plist3 = $vo1['price'];
+                        if($plist3){
+                        $parray3 = explode(",",$plist3);
+                        }
+                        if(in_array($vo1['id'],$pids)){
+                    </php>
+                    <tr>
+                        <td colspan="3">
+                            {$vo1.pname} ：&nbsp;&nbsp;
+                            <input type="hidden" name="pname[]" value="{$vo1.pname}">
+                            <input type="hidden" name="pid[]" value="{$vo1.id}">
+                            <select name="project[]" id="pro{$vo1.id}">
+                                <option value ="">{$vo1.pname}</option>
+                                <volist name="parray3" id="vo2">
+                                    <option <php>if(in_array($vo2,$projects)){</php>selected <php>}</php> value ="{$vo2}">{$vo2}</option>
+                                </volist>
+                            </select>
+                            </select>&nbsp;&nbsp;<input name="mid[]" value="{$vo1.pcode}"> （项目号自动编号）  &nbsp;&nbsp;
+                            <a onclick="$(this).parent().remove();">删除</a></td>
+                    </tr>
+                    <php>}</php>
+                </foreach>
+
+                <tr><td colspan="3">
+                    <A href="{:url('/admin/bbjs/addcom',array('adddo'=>'pro'))}">
+                        <input type="button" value="添加检测项目"/></A></td></tr>
+
             </table>
             <div class="xxmt_tab_inputs">
-              <input type="submit" value="保存"/>
-              <input type="submit" value="打印"/>
+                <input type="hidden" name="id" value="{$id}"/>
+                <input type="submit" value="提交"/>
+                <input type="reset" value="重置"/>
             </div>
-          </div>
-        </form>
-        
-      </div>
+        </div>
+    </form>
+</div>
 </body>
 </html>
