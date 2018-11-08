@@ -205,7 +205,7 @@ class XmglController extends AdminBaseController
         $this->assign('pros', $pros);
 
         if (!empty($request['pid'])) {
-            $where['p.pid'] = array("like","%".$request['pid']."%");
+            $where['p.project'] = array("like","%".$request['pid']."%");
         }
         if (!empty($request['com'])) {
             $where['b.com'] = $request['com'];
@@ -244,7 +244,7 @@ class XmglController extends AdminBaseController
         $this->assign('pros', $pros);
 
         if (!empty($request['pid'])) {
-            $where['p.pid'] = array("like","%".$request['pid']."%");
+            $where['p.project'] = array("like","%".$request['pid']."%");
         }
         if (!empty($request['com'])) {
             $where['b.com'] = $request['com'];

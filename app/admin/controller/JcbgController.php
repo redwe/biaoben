@@ -94,12 +94,110 @@ class JcbgController extends AdminBaseController
     {
         $where['b.isdel']   = 0;
         $request = input('request.');
+
+        $where1 = ['adddo'=>"type"];
+        $types = Db::name("options")->where($where1)->order("id DESC")->find();
+        $this->assign('types', $types);
+
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
+
         if (!empty($request['uname'])) {
             $where['b.uname'] = $request['uname'];
         }
         if (!empty($request['xid'])) {
             $where['b.xid'] = $request['xid'];
         }
+
+        if (!empty($request['com'])) {
+            $where['b.com'] = $request['com'];
+        }
+        if (!empty($request['btype'])) {
+            $where['b.btype'] = $request['btype'];
+        }
+
+        if(isset($request['status']) && $request['status']!="all"){
+            if(empty($request['status'])){
+                $status = 0;
+            }
+            else
+            {
+                $status = 1;
+            }
+            $where['b.status'] = $status;     //intval($request['status']);
+        }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project,p.mid";
+        $usersQuery = Db::name('bbjs');
+        if (!empty($request['date'])) {
+            $dt = $request['date'];
+            if($dt == '0'){
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->order("b.id DESC")
+                    ->paginate(10);
+            }
+            else
+            {
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->whereTime('b.create','>','-'.$dt.' days')
+                    ->order("b.id DESC")
+                    ->paginate(10);
+            }
+        }
+        else
+        {
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("b.id DESC")
+                ->paginate(10);
+        }
+        // 获取分页显示
+        $page = $list->render();
+        $this->assign('list', $list);
+        $this->assign('page', $page);
+        // 渲染模板输出
+        return $this->fetch();
+    }
+
+    public function bgcx()
+    {
+        $where['b.isdel']   = 0;
+        $request = input('request.');
+        if (!empty($request['uname'])) {
+            $where['b.uname'] = $request['uname'];
+        }
+        if (!empty($request['xid'])) {
+            $where['b.xid'] = $request['xid'];
+        }
+        $where1 = ['adddo'=>"type"];
+        $types = Db::name("options")->where($where1)->order("id DESC")->find();
+        $this->assign('types', $types);
+
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
+
+        if (!empty($request['com'])) {
+            $where['b.com'] = $request['com'];
+        }
+        if (!empty($request['btype'])) {
+            $where['b.btype'] = $request['btype'];
+        }
+
         if(isset($request['status']) && $request['status']!="all"){
             if(empty($request['status'])){
                 $status = 0;
@@ -156,13 +254,84 @@ class JcbgController extends AdminBaseController
         return $this->fetch();
     }
 
-    public function bgcx()
-    {
-        return $this->fetch();
-    }
-
     public function fsyj()
     {
+        $where['b.isdel']   = 0;
+        $request = input('request.');
+        if (!empty($request['uname'])) {
+            $where['b.uname'] = $request['uname'];
+        }
+        if (!empty($request['xid'])) {
+            $where['b.xid'] = $request['xid'];
+        }
+        $where1 = ['adddo'=>"type"];
+        $types = Db::name("options")->where($where1)->order("id DESC")->find();
+        $this->assign('types', $types);
+
+        $where2 = ['adddo'=>"com"];
+        $coms = Db::name("options")->where($where2)->order("id DESC")->find();
+        $this->assign('coms', $coms);
+
+        if (!empty($request['com'])) {
+            $where['b.com'] = $request['com'];
+        }
+        if (!empty($request['btype'])) {
+            $where['b.btype'] = $request['btype'];
+        }
+
+        if(isset($request['status']) && $request['status']!="all"){
+            if(empty($request['status'])){
+                $status = 0;
+            }
+            else
+            {
+                $status = 1;
+            }
+            $where['b.status'] = $status;     //intval($request['status']);
+        }
+        $join=[
+            ["project p","b.xid = p.xid"]
+        ];
+        $field = "b.*,p.project,p.mid";
+        $usersQuery = Db::name('bbjs');
+        if (!empty($request['date'])) {
+            $dt = $request['date'];
+            if($dt == '0'){
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->order("b.id DESC")
+                    ->paginate(10);
+            }
+            else
+            {
+                $list = $usersQuery
+                    ->alias('b')
+                    ->field($field)
+                    ->join($join)
+                    ->where($where)
+                    ->whereTime('create','>','-'.$dt.' days')
+                    ->order("b.id DESC")
+                    ->paginate(10);
+            }
+        }
+        else
+        {
+            $list = $usersQuery
+                ->alias('b')
+                ->field($field)
+                ->join($join)
+                ->where($where)
+                ->order("b.id DESC")
+                ->paginate(10);
+        }
+        // 获取分页显示
+        $page = $list->render();
+        $this->assign('list', $list);
+        $this->assign('page', $page);
+        // 渲染模板输出
         return $this->fetch();
     }
 

@@ -520,6 +520,10 @@ class BbjsController extends AdminBaseController
         $where['b.isdel']   = 0;
         $where['b.position']   = array('not in','客户处,运营中心');
         //$where['position']   = array('neq','客户处');
+        $where1 = ['adddo'=>"type"];
+        $types = Db::name("options")->where($where1)->order("id DESC")->find();
+        $this->assign('types', $types);
+
         $where2 = ['adddo'=>"com"];
         $coms = Db::name("options")->where($where2)->order("id DESC")->find();
         $this->assign('coms', $coms);
@@ -581,6 +585,9 @@ class BbjsController extends AdminBaseController
         $where['b.isdel']   = 0;
         $where['b.position']   = '运营中心';
         //$where['position']   = array('neq','客户处');
+        $where1 = ['adddo'=>"type"];
+        $types = Db::name("options")->where($where1)->order("id DESC")->find();
+        $this->assign('types', $types);
         $where2 = ['adddo'=>"com"];
         $coms = Db::name("options")->where($where2)->order("id DESC")->find();
         $this->assign('coms', $coms);

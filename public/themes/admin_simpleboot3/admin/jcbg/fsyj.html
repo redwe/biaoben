@@ -26,32 +26,41 @@
 
 <body>
   <div class="xxmt_right_nr_x">
-        <form>
+      <form name="search" action="#" method="post">
           <div class="xxmt_add-search">
             <div class="xxmt_add">
-            
+                <php>
+                    $plist = $coms['price'];
+                    if($plist){
+                    $parray = explode(",",$plist);
+                    }
+                    $tplist = $types['price'];
+                    if($tplist){
+                    $parray2 = explode(",",$tplist);
+                    }
+                </php>
             </div>
             <div class="xxmt_search">
-              <input type="text" placeholder="姓名"/>
-              <input type="text" placeholder="标本号"/>
-              <select>
-                <option value ="全部时间">全部时间</option>
-                <option value ="近3天">近3天</option>
-                <option value ="近7天">近7天</option>
-                <option value ="近1月">近1月</option>
-              </select>
-              <select>
-                <option value ="检测项目">检测项目</option>
-                <option value ="EAR">EAR</option>
-                <option value ="EAR">EAR</option>
-                <option value ="PD-L1">PD-L1</option>
-              </select>
-              <select>
-                <option value ="送检单位">送检单位</option>
-                <option value ="单位a">单位a</option>
-                <option value ="单位b">单位b</option>
-                <option value ="单位c">单位c</option>
-              </select>
+                <input type="text" name="uname" placeholder="姓名"/>
+                <input type="text" name="xid" placeholder="标本号"/>
+                <select name="date">
+                    <option value ="0">全部时间</option>
+                    <option value ="3">近3天</option>
+                    <option value ="7">近7天</option>
+                    <option value ="30">近1月</option>
+                </select>
+                <select name="btype">
+                    <option value ="">{$types.pname}</option>
+                    <foreach name="parray2" item="vo">
+                        <option value ="{$vo}">{$vo}</option>
+                    </foreach>
+                </select>
+                <select name="com">
+                    <option value ="">{$coms.pname}</option>
+                    <foreach name="parray" item="vo">
+                        <option value ="{$vo}">{$vo}</option>
+                    </foreach>
+                </select>
               <input type="text" placeholder="检测结果"/>
               <button type="submit">搜索</button> 
             </div>
@@ -72,101 +81,40 @@
                 <td>报告</td>
                 <td>发送状态</td>
               </tr>
+                <foreach name="list" item="vo">
+                    <php>
+                        $mid = json_decode($vo['mid'],true);
+                    </php>
               <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
+                <td><input type="checkbox" name="checkid[]" value="{$vo.id}"/></td>
+                <td>{$vo.id}</td>
+                <td>{$vo.uname}</td>
+                <td>{$vo.xid}</td>
+                <td><php>
+                    $vo['project'] = json_decode($vo['project'],true);
+                    //dump($vo['project']);
+                </php>
+                    <foreach name="vo['project']" item="vo2">
+                        {$vo2}、
+                    </foreach>
+                </td>
+                <td>
+                    <foreach name="mid" item="vo3">
+                        {$vo3}、
+                    </foreach>
+                </td>
                 <td>已审核</td>
                 <td><a href="#">查看</a></td>
                 <td>发送成功</td>
               </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已审核</td>
-                <td><a href="#">查看</a></td>
-                <td>发送成功</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已审核</td>
-                <td><a href="#">查看</a></td>
-                <td>发送成功</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已审核</td>
-                <td><a href="#">查看</a></td>
-                <td>发送成功</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已审核</td>
-                <td><a href="#">查看</a></td>
-                <td>发送成功</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已审核</td>
-                <td><a href="#">查看</a></td>
-                <td>发送成功</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已审核</td>
-                <td><a href="#">查看</a></td>
-                <td>发送失败</td>
-              </tr>
-              <tr>
-                <td><input type="checkbox" value=""/></td>
-                <td>1</td>
-                <td>张三</td>
-                <td>X201800002</td>
-                <td>PD-L1</td>
-                <td>M2018-00001</td>
-                <td>已审核</td>
-                <td><a href="#">查看</a></td>
-                <td>未成功</td>
-              </tr>
+                </foreach>
             </table>
             <div class="xxmt_tab_inputs">
               <input type="submit" value="发送邮件"/>
             </div>
           </div>
         </form>
-        <div class="fenye"> <a href="#"> << </a> <a href="#"> < </a> <b>1</b> <a href="#"> 2 </a> <a href="#"> 3 </a> <a href="#"> > </a> <a href="#"> >> </a> </div>
+        <div class="fenye"> {$page} </div>
       </div>
 </body>
 </html>

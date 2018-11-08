@@ -26,7 +26,7 @@
 
 <body>
   <div class="xxmt_right_nr_x">
-        <form>
+      <form name="search" action="#" method="post">
           <div class="xxmt_add-search">
             <div class="xxmt_add">
             
@@ -35,7 +35,7 @@
                 <input type="text" name="uname"  placeholder="姓名"/>
                 <input type="text" name="xid"  placeholder="标本号"/>
                 <select name="date">
-                    <option value ="all">全部时间</option>
+                    <option value ="0">全部时间</option>
                     <option value ="3">近3天</option>
                     <option value ="7">近7天</option>
                     <option value ="30">近1月</option>
@@ -81,7 +81,8 @@
                     <foreach name="vo['project']" item="vo2">
                         {$vo2}、
                     </foreach></td>
-                <td><foreach name="mid" item="vo3">
+                <td>
+                    <foreach name="mid" item="vo3">
                     {$vo3}、
                 </foreach></td>
                 <td>{:get_status($vo['status'])}</td>
